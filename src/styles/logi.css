@@ -1,0 +1,208 @@
+/* Basic Reset */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Background Styling */
+body {
+    background-image: url('../assets/login-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+/* Continue as Guest Button */
+.continue-guest {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: rgba(89, 168, 89, 0.8);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+/* Navigation Styling */
+nav {
+    background-color: rgba(89, 168, 89, 0.5);
+}
+
+nav ul {
+    display: flex;
+    padding: 10px;
+    justify-content: space-around;
+}
+
+li {
+    padding: 10px;
+    list-style: none;
+    color: rgba(38, 38, 255, 0.8);
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+/* Login Box Styling */
+.login {
+    position: relative;
+    margin: auto;
+    height: 400px;
+    width: 300px;
+    border-radius: 30px;
+    background-color: #ffffff; /* Solid color */
+    padding: 20px;
+    z-index: 2;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Strobing Circle Effect */
+.login::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 500px;
+    height: 500px;
+    background-color: rgba(89, 168, 89, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    animation: pulse 2s infinite;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 0.4;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.8;
+    }
+}
+
+/* Login Box Content Styling */
+.login h1 {
+    text-align: center;
+    color: #333;
+    z-index: 2;
+}
+
+.input-box {
+    height: 50px;
+    width: 100%;
+    margin: 30px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.input-box input {
+    width: 90%;
+    height: 100%;
+    background: transparent;
+    border: 2px solid #ccc;
+    border-radius: 40px;
+    padding: 0px 10px;
+    outline: none;
+    font-size: 16px;
+    z-index: 2;
+}
+
+.input-box i {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    color: #aaa;
+    z-index: 2;
+}
+
+.remember {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    z-index: 2;
+}
+
+.remember a {
+    text-decoration: none;
+    color: rgba(38, 38, 255, 0.8);
+    font-weight: bold;
+    z-index: 2;
+}
+
+.forget-password {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    z-index: 2;
+}
+
+.forget-password button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    background-color: rgba(89, 168, 89, 0.8);
+    color: white;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.create {
+    text-align: center;
+    margin-top: 20px;
+    z-index: 2;
+}
+
+.create a {
+    text-decoration: none;
+    color: rgba(38, 38, 255, 0.8);
+    font-weight: bold;
+    z-index: 2;
+}
+
+/* Add this to the existing CSS */
+
+/* Modified styles for registering state */
+.login.registering {
+    height: 600px; /* Adjust height for registration form */
+    animation: expand 0.5s ease-in-out forwards;
+    z-index: 2;
+}
+
+.login.registering::before {
+    width: 600px;
+    height: 600px;
+    background-color: brown; /* Change circle color to brown */
+    z-index: 1;
+}
+
+/* Add keyframes for expanding animation */
+@keyframes expand {
+    from {
+        height: 400px;
+    }
+    to {
+        height: 600px;
+    }
+}
+
+/* Additional styles for register form */
+.login.registering .input-box {
+    margin: 15px 0;
+    z-index: 2;
+}
+
