@@ -1,3 +1,5 @@
+/* login.css */
+
 /* Basic Reset */
 * {
     padding: 0;
@@ -17,6 +19,7 @@ body {
     align-items: center;
     min-height: 100vh;
 }
+
 /* Continue as Guest Button */
 .continue-guest {
     position: absolute;
@@ -30,7 +33,9 @@ body {
     cursor: pointer;
     font-size: 16px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 10; /* Ensure it is above other elements */
 }
+
 /* Navigation Styling */
 nav {
     background-color: rgba(89, 168, 89, 0.5);
@@ -59,7 +64,7 @@ li {
     border-radius: 30px;
     background-color: #ffffff; /* Solid color */
     padding: 20px;
-    z-index: 2;
+    z-index: 5; /* Ensure it is above the background */
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 
@@ -167,20 +172,24 @@ li {
     z-index: 2;
 }
 
-.create a {
+.create button {
     text-decoration: none;
     color: rgba(38, 38, 255, 0.8);
     font-weight: bold;
-    z-index: 2;
+    position: relative;
+    cursor: pointer;
+    z-index: 10;
 }
-
+.create button:hover {
+    text-decoration: underline;
+}
 /* Add this to the existing CSS */
 
 /* Modified styles for registering state */
 .login.registering {
     height: 600px; /* Adjust height for registration form */
     animation: expand 0.5s ease-in-out forwards;
-    z-index: 2;
+    z-index: 5; /* Ensure it is above the background */
 }
 
 .login.registering::before {
@@ -205,4 +214,3 @@ li {
     margin: 15px 0;
     z-index: 2;
 }
-

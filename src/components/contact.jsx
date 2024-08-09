@@ -1,8 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/contact.css'; // Adjust the path if necessary
+import axios from 'axios';
+import '../styles/contact.css';
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    full_name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: ''
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:5000/submit-contact-form', formData);
+      alert('Form submitted successfully');
+    } catch (error) {
+      alert('Form not submitted');
+    }
+  };
+
   return (
     <div className="container">
       <nav className="navigation">
@@ -20,27 +43,26 @@ const Contact = () => {
       </nav>
       <div className="contact">
         <h1>Contact Us</h1>
-        <p>Interested in knowing more, requesting a large product order, or would just like to say hi? Fill the form
-          below to get in touch with the Farm team.</p>
-        <form action="/submit-contact-form" method="post">
+        <p>Interested in knowing more, requesting a large product order, or would just like to say hi? Fill the form below to get in touch with the Farm team.</p>
+        <form onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="full-name">Full Name</label>
-              <input type="text" name="full_name" id="full-name" placeholder="Robert Wilson" />
+              <input type="text" name="full_name" id="full-name" placeholder="Robert Wilson" onChange={handleChange} />
             </div>
             <div className="form-group">
               <label htmlFor="email">Email Address</label>
-              <input type="email" name="email" id="email" placeholder="example@yourmail.com" />
+              <input type="email" name="email" id="email" placeholder="example@yourmail.com" onChange={handleChange} />
             </div>
           </div>
           <div className="form-row">
             <div className="form-group">
               <label htmlFor="phone">Phone Number</label>
-              <input type="tel" name="phone" id="phone" placeholder="(485) 186 - 0457" />
+              <input type="tel" name="phone" id="phone" placeholder="(485) 186 - 0457" onChange={handleChange} />
             </div>
             <div className="form-group">
               <label htmlFor="subject">Subject</label>
-              <select name="subject" id="subject">
+              <select name="subject" id="subject" onChange={handleChange}>
                 <option value="General Question">General Question</option>
                 <option value="Product Inquiry">Product Inquiry</option>
                 <option value="Other">Other</option>
@@ -49,7 +71,7 @@ const Contact = () => {
           </div>
           <div className="form-group">
             <label htmlFor="message">Message</label>
-            <textarea name="message" id="message" placeholder="Hello, I would like to get in touch with Farm about..."></textarea>
+            <textarea name="message" id="message" placeholder="Hello, I would like to get in touch with Farm about..." onChange={handleChange}></textarea>
           </div>
           <div className="form-group">
             <button type="submit" className="submit-btn">Send Message</button>

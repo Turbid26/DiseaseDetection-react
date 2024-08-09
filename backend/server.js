@@ -11,7 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // MongoDB Atlas Connection
-const uri = 'mongodb+srv://raghuram2432006:<password>@cluster0.fwyro.mongodb.net/?retryWrites=true&w=majority&appName=cluster0';
+const uri = 'mongodb+srv://raghuram2432006:EFmdhacZuFY9eWzx@cluster0.fwyro.mongodb.net/?retryWrites=true&w=majority&appName=cluster0';
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const connection = mongoose.connection;
@@ -34,6 +34,7 @@ app.listen(port, () => {
 const Contact = require('./models/contact');
 
 // Save data to MongoDB
+
 app.post('/submit-contact-form', async (req, res) => {
     const { full_name, email, phone, subject, message } = req.body;
 

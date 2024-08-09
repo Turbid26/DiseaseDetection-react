@@ -1,8 +1,9 @@
+/* Basic Reset */
 * {
     margin: 0;
     padding: 0;
-    font-family: 'Poppins', sans-serif;
     box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
     color: black;
 }
 
@@ -35,7 +36,8 @@ body {
     padding: 10px 20px;
     cursor: pointer;
 }
-a{
+
+a {
     text-decoration: none;
 }
 
@@ -45,7 +47,7 @@ a{
     align-items: center;
     height: 100vh;
     padding: 20px;
-    padding-top: 100px; /* Add padding to prevent overlap with navigation */
+    padding-top: 100px; /* Prevent overlap with navigation */
     position: relative;
     background-color: white;
 }
@@ -116,7 +118,7 @@ a{
 
 .submit-btn {
     display: inline-block;
-    background-color: rgba(255, 255, 5,0.9);
+    background-color: rgba(255, 255, 5, 0.9);
     padding: 10px 20px;
     border-radius: 5px;
     border: none;
@@ -151,8 +153,8 @@ a{
     background-image: url('../assets/contact-background.jpg');
     background-size: auto;
     background-position: center;
-    width: 400%;
-    height: 110%;
+    width: 100%; /* Adjusted */
+    height: 100%; /* Adjusted */
     border-radius: 10px;
     position: relative;
     top: 30px;
@@ -254,6 +256,6 @@ a{
     height: 30px;
 }
 
-footer{
+footer {
     background-color: rgb(244, 244, 12);
 }

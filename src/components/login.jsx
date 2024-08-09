@@ -50,7 +50,7 @@ const Login = () => {
               <button type="submit">Register</button>
             </div>
             <div className="create">
-              Already have an account? <a href="#" onClick={toggleForm}>Login</a>
+              Already have an account? <button type="button" onClick={toggleForm}>Login</button>
             </div>
           </>
         ) : (
@@ -74,7 +74,7 @@ const Login = () => {
               <button type="submit">Login</button>
             </div>
             <div className="create">
-              Don't have an account? <a href="#" onClick={toggleForm}>Register</a>
+              Don't have an account? <button type="button" onClick={toggleForm}>Register</button>
             </div>
           </>
         )}
