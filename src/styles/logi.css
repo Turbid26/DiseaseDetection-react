@@ -195,7 +195,7 @@ li {
 .login.registering::before {
     width: 600px;
     height: 600px;
-    background-color: brown; /* Change circle color to brown */
+    background-color: rgb(171, 97, 97); /* Change circle color to brown */
     z-index: 1;
 }
 
