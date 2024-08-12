@@ -9,33 +9,9 @@
 
 body {
     background-color: #f9f9f9;
+    background-repeat: no-repeat;
 }
 
-.navigation {
-    position: fixed;
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: yellow;
-    z-index: 1;
-    width: auto;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.navigation ul {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px; /* Spacing between menu items */
-}
-
-.navigation li {
-    list-style: none;
-    padding: 10px 20px;
-    cursor: pointer;
-}
 
 a {
     text-decoration: none;

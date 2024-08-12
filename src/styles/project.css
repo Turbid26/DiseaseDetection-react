@@ -1,0 +1,24 @@
+/* projects.css */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .content {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 60px); /* Adjust based on navbar height */
+    padding: 20px;
+    background-repeat: no-repeat;
+  }
+  
+  h1 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+  }
+  

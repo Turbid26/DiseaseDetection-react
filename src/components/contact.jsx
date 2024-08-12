@@ -28,19 +28,6 @@ const Contact = () => {
 
   return (
     <div className="container">
-      <nav className="navigation">
-        <ul>
-          <li><Link to="/home">Home</Link></li>
-          <li>Services</li>
-          <li>Projects</li>
-          <li>Blog</li>
-          <li><Link to="/contact">Contact</Link></li>
-          <li>
-            <i className='bx bx-user'></i>
-            <label htmlFor="bx-user"><Link to="/">Login</Link></label>
-          </li>
-        </ul>
-      </nav>
       <div className="contact">
         <h1>Contact Us</h1>
         <p>Interested in knowing more, requesting a large product order, or would just like to say hi? Fill the form below to get in touch with the Farm team.</p>
@@ -66,7 +53,7 @@ const Contact = () => {
                 <option value="General Question">General Question</option>
                 <option value="Product Inquiry">Product Inquiry</option>
                 <option value="Other">Other</option>
-              </select>
+              </select> 
             </div>
           </div>
           <div className="form-group">

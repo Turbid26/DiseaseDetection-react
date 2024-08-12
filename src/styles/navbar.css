@@ -1,0 +1,27 @@
+/* navbar.css */
+
+/* Navigation Bar */
+.navigation {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: yellow;
+    z-index: 1;
+    width: auto;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.navigation ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Spacing between menu items */
+}
+
+.navigation li {
+    list-style: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}

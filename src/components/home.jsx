@@ -1,31 +1,11 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import '../styles/home.css';
 
-
 const Home = () => {
-    const navigate = useNavigate();
-  
-    const handleLoginRedirect = () => {
-      navigate('/'); // Redirect to the login page
-    };
-
     return (
         <div className="container">
-            {/* Navigation Bar */}
-            <nav className="navigation">
-                <ul>
-                    <li>Home</li>
-                    <li>Services</li>
-                    <li>Projects</li>
-                    <li>Blog</li>
-                    <li><a href="/contact">Contact</a></li>
-                    <li onClick={handleLoginRedirect}>
-                       <i className='bx bx-user'></i>
-                       <label htmlFor="bx-user">Login</label>
-                    </li>
-                </ul>
-            </nav>
+            
 
             {/* Hero Section */}
             <section className="about">
