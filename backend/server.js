@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+// Import the Contact model
+const Contact = require('./models/contact');
+
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -19,22 +22,7 @@ connection.once('open', () => {
     console.log('MongoDB database connection established successfully');
 });
 
-// Example route
-app.post('/submit-contact-form', (req, res) => {
-    const { full_name, email, phone, subject, message } = req.body;
-
-    // You can define a schema and model here and save data to MongoDB
-    res.send('Form submitted');
-});
-
-app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
-});
-
-const Contact = require('./models/contact');
-
-// Save data to MongoDB
-
+// Route to handle form submissions
 app.post('/submit-contact-form', async (req, res) => {
     const { full_name, email, phone, subject, message } = req.body;
 
@@ -50,6 +38,11 @@ app.post('/submit-contact-form', async (req, res) => {
         await newContact.save();
         res.status(200).send('Form submitted successfully');
     } catch (err) {
+        console.error('Error saving form:', err);
         res.status(400).send('Error saving form');
     }
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on port: ${port}`);
 });

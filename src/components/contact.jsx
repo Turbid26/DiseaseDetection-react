@@ -37,7 +37,7 @@ const Contact = () => {
           <li><Link to="/contact">Contact</Link></li>
           <li>
             <i className='bx bx-user'></i>
-            <label htmlFor="bx-user"><Link to="/login">Login</Link></label>
+            <label htmlFor="bx-user"><Link to="/">Login</Link></label>
           </li>
         </ul>
       </nav>
@@ -62,7 +62,7 @@ const Contact = () => {
             </div>
             <div className="form-group">
               <label htmlFor="subject">Subject</label>
-              <select name="subject" id="subject" onChange={handleChange}>
+              <select name="subject" id="subject" onChange={handleChange} required>
                 <option value="General Question">General Question</option>
                 <option value="Product Inquiry">Product Inquiry</option>
                 <option value="Other">Other</option>
