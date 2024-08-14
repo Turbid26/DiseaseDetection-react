@@ -4,7 +4,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const bcrypt = require('bcryptjs');
 const Contact = require('./models/contact'); // Import your Contact model
+const User = require('./models/users')
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -41,6 +43,7 @@ app.post('/submit-contact-form', async (req, res) => {
         res.status(400).send('Error saving form');
     }
 });
+app.use('/api/auth', require('./routes/auth'));
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
