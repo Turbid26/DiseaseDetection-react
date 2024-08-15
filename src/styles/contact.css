@@ -12,7 +12,6 @@ body {
     background-repeat: no-repeat;
 }
 
-
 a {
     text-decoration: none;
 }
@@ -127,7 +126,7 @@ a {
 
 .image-side {
     background-image: url('../assets/contact-background.jpg');
-    background-size: auto;
+    background-size: cover; /* Changed to cover for better fit */
     background-position: center;
     width: 100%; /* Adjusted */
     height: 100%; /* Adjusted */
@@ -140,7 +139,7 @@ a {
 .footer {
     margin-top: 70px;
     padding: 20px 40px;
-    position: relative;
+    background-color: rgb(244, 244, 12); /* Moved to footer */
 }
 
 .footer-content {
@@ -153,8 +152,8 @@ a {
     margin-bottom: 20px;
 }
 
-.footer-logo img {
-    height: 50px;
+.footer-logo h1 {
+    font-size: 24px; /* Adjusted for better visual balance */
 }
 
 .footer-logo p {
@@ -230,8 +229,4 @@ a {
 .social-icons img {
     width: 30px;
     height: 30px;
-}
-
-footer {
-    background-color: rgb(244, 244, 12);
 }

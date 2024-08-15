@@ -19,7 +19,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/submit-contact-form', formData);
+      await axios.post('http://localhost:5000/submit-contact-form', formData);
       alert('Form submitted successfully');
     } catch (error) {
       alert('Form not submitted');
@@ -53,7 +53,7 @@ const Contact = () => {
                 <option value="General Question">General Question</option>
                 <option value="Product Inquiry">Product Inquiry</option>
                 <option value="Other">Other</option>
-              </select> 
+              </select>
             </div>
           </div>
           <div className="form-group">
@@ -70,18 +70,18 @@ const Contact = () => {
         <div className="footer-content">
           <div className="footer-logo">
             <h1>AgriDiag</h1>
-            <p>Copyright © AGRIDIAG | Designed by <a href="#">BRIX Templates</a> – Powered by <a href="#">Webflow</a></p>
+            <p>Copyright © AGRIDIAG | Designed by <a href="https://www.brix.com">BRIX Templates</a> – Powered by <a href="https://www.webflow.com">Webflow</a></p>
           </div>
           <div className="footer-links">
             <div className="footer-column">
               <h4>Pages</h4>
               <ul>
                 <li><Link to="/home">Home</Link></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Reviews</a></li>
+                <li><Link to="/about">About</Link></li>
+                <li><Link to="/reviews">Reviews</Link></li>
                 <li><Link to="/contact">Contact</Link></li>
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">Products</a></li>
+                <li><Link to="/blog">Blog</Link></li>
+                <li><Link to="/products">Products</Link></li>
               </ul>
             </div>
             <div className="footer-column">
@@ -97,7 +97,7 @@ const Contact = () => {
             </div>
             <div className="footer-column">
               <h4>Join Our Mailing List</h4>
-              <p>Join our weekly newsletter to discover about the special process behind Farm's products.</p>
+              <p>Join our weekly newsletter to discover the special process behind Farm's products.</p>
               <form>
                 <input type="email" placeholder="Enter your email" />
                 <button type="submit">Subscribe</button>
