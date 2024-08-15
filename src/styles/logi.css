@@ -215,17 +215,22 @@ li {
     z-index: 2;
 }
 /* logi.css */
-
-/* Styling for the empty link */
-.empty-link {
-    color: #007bff; /* Bootstrap's primary color, or adjust to match your design */
+/* Styling for the empty button */
+.empty-button {
+    background: none; /* Removes default button background */
+    border: none; /* Removes default button border */
+    color: #1a71c9; /* Button text color */
+    text-emphasis-color: rgb(95, 95, 180);
+    font-size: 14px; /* Font size */
+    cursor: pointer; /* Changes cursor to pointer */
+    padding: 0; /* Removes default button padding */
+    margin-left: 10px; /* Spacing from other elements */
     text-decoration: none; /* Removes underline */
-    font-size: 14px; /* Adjust font size if necessary */
-    margin-left: 10px; /* Adds spacing from other elements */
-  }
-  
-  .empty-link:hover {
-    text-decoration: underline; /* Adds underline on hover for accessibility */
+    z-index: 2;
+}
+
+.empty-button:hover {
+    text-decoration: underline; /* Adds underline on hover */
     color: #0056b3; /* Darker shade for hover effect */
-  }
+}
   

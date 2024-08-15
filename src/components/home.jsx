@@ -1,12 +1,9 @@
 import React from 'react';
-
 import '../styles/home.css';
 
 const Home = () => {
     return (
         <div className="container">
-            
-
             {/* Hero Section */}
             <section className="about">
                 <h1 className="head">AGRIDIAG</h1>
@@ -16,7 +13,7 @@ const Home = () => {
             {/* About Us Section */}
             <section className="aboutus">
                 <div>
-                    <a href="#">About Us</a>
+                    <button className='empty-button'>About Us</button>
                     <p>
                         Our solution empowers farmers with an AI-driven mobile app for swift and accurate crop disease
                         diagnosis, minimizing misdiagnosis. Researchers gain access to real-time data and trends via our

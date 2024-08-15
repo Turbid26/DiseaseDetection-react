@@ -35,27 +35,27 @@ const Login = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (email.length===0){
+    if (email.length === 0) {
       alert('email is empty');
       return;
     }
-    if (firstName.length===0){
+    if (firstName.length === 0) {
       alert('first name is empty');
       return;
     }
-    if (lastName.length===0){
+    if (lastName.length === 0) {
       alert('last name is empty');
       return;
     }
-    if (username.length===0){
+    if (username.length === 0) {
       alert('username is empty');
       return;
     }
-    if (password.length===0){
+    if (password.length === 0) {
       alert('password is empty');
       return;
     }
-    if (confirmPassword.length===0){
+    if (confirmPassword.length === 0) {
       alert('confirm password is empty');
       return;
     }
@@ -135,7 +135,7 @@ const Login = () => {
                   <input type="checkbox" name="rem" id="rem" />
                   Remember me
                 </label>
-                <a href="#" className="empty-link">Forget Password?</a>
+                <button type="button" className="empty-button">Forget Password?</button>
               </>
             )}
           </div>
