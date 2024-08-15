@@ -89,3 +89,17 @@
         width: 80%;
     }
 }
+
+/* Styling for the empty link */
+.empty-link {
+    color: #007bff; /* Bootstrap's primary color, or adjust to match your design */
+    text-decoration: none; /* Removes underline */
+    font-size: 14px; /* Adjust font size if necessary */
+    margin-left: 10px; /* Adds spacing from other elements */
+  }
+  
+  .empty-link:hover {
+    text-decoration: underline; /* Adds underline on hover for accessibility */
+    color: #0056b3; /* Darker shade for hover effect */
+  }
+  
