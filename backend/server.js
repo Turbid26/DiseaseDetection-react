@@ -1,10 +1,10 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const path = require('path');
 const Contact = require('./models/contact'); // Import your Contact model
 const User = require('./models/users');
 
@@ -16,7 +16,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // MongoDB Atlas Connection
-const uri = process.env.MONGODB_URI || 'mongodb+srv://raghuram2432006:EFmdhacZuFY9eWzx@cluster0.fwyro.mongodb.net/?retryWrites=true&w=majority&appName=cluster0';
+const uri = process.env.MONGODB_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const connection = mongoose.connection;
