@@ -35,6 +35,30 @@ const Login = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
+    if (email.length===0){
+      alert('email is empty');
+      return;
+    }
+    if (firstName.length===0){
+      alert('first name is empty');
+      return;
+    }
+    if (lastName.length===0){
+      alert('last name is empty');
+      return;
+    }
+    if (username.length===0){
+      alert('username is empty');
+      return;
+    }
+    if (password.length===0){
+      alert('password is empty');
+      return;
+    }
+    if (confirmPassword.length===0){
+      alert('confirm password is empty');
+      return;
+    }
     if (password !== confirmPassword) {
       alert('Passwords do not match');
       return;

@@ -15,6 +15,23 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ msg: 'User already exists' });
     }
 
+
+    /*let str = User.username.trim();
+    if(str.length===0){
+      return res.status(400).json({ msg: 'Username is blank' });
+    }
+    str = User.password.trim();
+    if(str.length===0){
+      return res.status(400).json({ msg: 'Password is blank' });
+    }
+    str = User.firstName.trim();
+    if(str.length===0){
+      return res.status(400).json({ msg: 'First_name is blank' });
+    }
+    str = User.lastName.trim();
+    if(str.length===0){
+      return res.status(400).json({ msg: 'Last_name is blank' });
+    }*/
     user = new User({
       email,
       firstName,
