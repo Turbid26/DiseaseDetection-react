@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
     }
 
 
-    /*let str = User.username.trim();
+    let str = User.username.trim();
     if(str.length===0){
       return res.status(400).json({ msg: 'Username is blank' });
     }
@@ -31,7 +31,7 @@ router.post('/register', async (req, res) => {
     str = User.lastName.trim();
     if(str.length===0){
       return res.status(400).json({ msg: 'Last_name is blank' });
-    }*/
+    }
     user = new User({
       email,
       firstName,
