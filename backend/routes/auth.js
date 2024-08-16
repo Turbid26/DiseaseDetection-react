@@ -15,23 +15,21 @@ router.post('/register', async (req, res) => {
       return res.status(400).json({ msg: 'User already exists' });
     }
 
-
-    let str = User.username.trim();
-    if(str.length===0){
+    // Validate the input fields directly from req.body
+    if (!username.trim()) {
       return res.status(400).json({ msg: 'Username is blank' });
     }
-    str = User.password.trim();
-    if(str.length===0){
+    if (!password.trim()) {
       return res.status(400).json({ msg: 'Password is blank' });
     }
-    str = User.firstName.trim();
-    if(str.length===0){
-      return res.status(400).json({ msg: 'First_name is blank' });
+    if (!firstName.trim()) {
+      return res.status(400).json({ msg: 'First name is blank' });
     }
-    str = User.lastName.trim();
-    if(str.length===0){
-      return res.status(400).json({ msg: 'Last_name is blank' });
+    if (!lastName.trim()) {
+      return res.status(400).json({ msg: 'Last name is blank' });
     }
+
+    // Create a new user
     user = new User({
       email,
       firstName,
@@ -40,9 +38,11 @@ router.post('/register', async (req, res) => {
       password,
     });
 
+    // Hash the password
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
 
+    // Save the user to the database
     await user.save();
 
     res.status(201).json({ msg: 'User registered successfully' });

@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const contactRoute = require('./routes/contact');
 const uploadRoute = require('./routes/upload');
+const authRoute = require('./routes/auth');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -27,6 +28,7 @@ connection.once('open', () => {
 // API Routes
 app.use('/api/contact', contactRoute);
 app.use('/api/upload', uploadRoute);
+app.use('/api/auth',authRoute);
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'build')));
