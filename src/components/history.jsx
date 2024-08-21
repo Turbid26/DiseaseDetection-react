@@ -37,11 +37,12 @@ const History = () => {
  
 
   // React hook to run the falling leaves effect once when the component is mounted
-  useEffect(() => {startFallingLeaves();}, []);
+  useEffect(() => {
+    startFallingLeaves();
+  }, [startFallingLeaves]);
 
   return (
     <div className="container">
-      
 
       <main>
         <div className="b">x  
