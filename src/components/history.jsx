@@ -34,7 +34,9 @@ const History = () => {
   };
 
   // Function to start the falling leaves effect
- 
+  const startFallingLeaves = () => {
+    setInterval(createLeaf, 500); // Create a new leaf every 500ms
+  };
 
   // React hook to run the falling leaves effect once when the component is mounted
   useEffect(() => {
