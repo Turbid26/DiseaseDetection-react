@@ -44,20 +44,7 @@ const Projects = () => {
 
   return (
     <div className="container">
-      {/* Navigation Bar */}
-      <nav className="navigation">
-        <ul>
-          <a href="home.htm"><li>Home</li></a>
-          <li>Services</li>
-          <li>Projects</li>
-          <li>Blog</li>
-          <a href="contact.htm"><li>Contact</li></a>
-          <li>
-            <a href="logi.htm"><i className="bx bx-user"></i></a>
-            <label htmlFor="bx-user">Login</label>
-          </li>
-        </ul>
-      </nav>
+     
 
       <div className="pro">
         <img id="bruce" src="plant.png" alt="Plant" />

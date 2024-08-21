@@ -34,31 +34,14 @@ const History = () => {
   };
 
   // Function to start the falling leaves effect
-  const startFallingLeaves = () => {
-    setInterval(createLeaf, 500); // Create a new leaf every 500ms
-  };
+ 
 
   // React hook to run the falling leaves effect once when the component is mounted
-  useEffect(() => {
-    startFallingLeaves();
-  }, []);
+  useEffect(() => {startFallingLeaves();}, []);
 
   return (
     <div className="container">
-      {/* Navigation Bar */}
-      <nav className="navigation">
-        <ul>
-          <a href="home.htm"><li>Home</li></a>
-          <li>Services</li>
-          <li>History</li>
-          <li>Blog</li>
-          <a href="contact.htm"><li>Contact</li></a>
-          <a href="logi.htm"><li>
-            <i className="bx bx-user"></i>
-            <label htmlFor="bx-user">Login</label>
-          </li></a>
-        </ul>
-      </nav>
+      
 
       <main>
         <div className="b">x  
