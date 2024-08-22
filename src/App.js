@@ -5,7 +5,7 @@ import Login from './components/login';
 import Home from './components/home';
 import Contact from './components/contact';
 import Services from './components/services';
-import Project from './components/projects';
+import History from './components/history';
 import Blog from './components/blog';
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
         <Route path="/home" element={<><Navbar /><Home /></>} /> {/* Navbar included */}
         <Route path="/contact" element={<><Navbar /><Contact /></>} /> {/* Navbar included */}
         <Route path="/services" element={<><Navbar /><Services /></>} /> {/* Navbar included */}
-        <Route path="/projects" element={<><Navbar /><Project /></>} /> {/* Navbar included */}
+        <Route path="/history" element={<><Navbar /><History /></>} /> {/* Navbar included */}
         <Route path="/blog" element={<><Navbar /><Blog /></>} /> {/* Navbar included */}
 
       </Routes>

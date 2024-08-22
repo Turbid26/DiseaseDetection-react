@@ -8,7 +8,7 @@ const Services = () => {
   const [selectedImage, setSelectedImage] = useState(null); // Stores the selected file
   const [previewImage, setPreviewImage] = useState(null); // Stores the preview URL
   const [message, setMessage] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // Placeholder for logged-in state
+  const [isLoggedIn] = useState(true); // Placeholder for logged-in state
 
   // Handle image selection
   const handleImageChange = (e) => {
