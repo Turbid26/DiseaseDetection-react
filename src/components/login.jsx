@@ -217,7 +217,6 @@ const Login = () => {
       justifyContent: 'center',
       color: 'rgba(38, 38, 255, 0.8)',
       fontWeight: 'bold',
-      position: 'relative',
       cursor: 'pointer',
       zIndex: 10,
     },
