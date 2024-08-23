@@ -17,8 +17,8 @@ const Projects = () => {
     <div className="container">
      
 
-      <div className="pro">
-        <img id="bruce" src="plant.png" alt="Plant" />
+      <div className="project">
+        <img id="p" src="plant.png" alt="Plant" />
         <div>
           <h1 style={{ position: 'relative', left: '200px' }}>AGRIDIAG</h1>
           <p style={{ fontSize: '20px', color: 'black', zIndex: 10 }}>

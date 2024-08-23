@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/history.css'; // Assuming the CSS is in the same path
 
 const History = () => {
@@ -11,7 +11,7 @@ const History = () => {
       <main>
         <div className="b">x  
           <h1 style={{ textAlign: 'center', position: 'relative', top: '100px' }}>History Page</h1>
-          <a href="projects.jsx">
+          <Link to="/projects">
             <div className="project">
               <img id="p" src={require('../assets/plant.png') }alt="Project" />
               <div>
@@ -21,7 +21,7 @@ const History = () => {
                 </p>
               </div>
             </div>
-          </a>
+          </Link>
         </div>
       </main>
     </div>
