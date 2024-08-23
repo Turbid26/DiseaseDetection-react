@@ -3,16 +3,6 @@ import '../styles/project.css';
 
 const Projects = () => {
 
-  // Function to start the falling leaves effect
-  const startFallingLeaves = () => {
-    setInterval(createLeaf, 500);
-  };
-
-  // React hook to run the falling leaves effect once when the component is mounted
-  useEffect(() => {
-    startFallingLeaves();
-  }, []);
-
   return (
     <div className="container">
      

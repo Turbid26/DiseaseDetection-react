@@ -34,17 +34,17 @@
         align-items: center;
     }
 }
-/* body {
+ body {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-     background-image: url('../../public/assets/login-background.jpg'); 
+    /*background-image: url('../assets/login-background.jpg');*/
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-} */
+} 
 .project {
     position:relative;
     top : 100px;
