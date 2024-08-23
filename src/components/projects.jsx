@@ -1,36 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import '../styles/project.css';
 
 const Projects = () => {
-  // Function to create a leaf element and add to the DOM
-  const createLeaf = () => {
-    const leaf = document.createElement('div');
-    leaf.className = 'leaf';
-    leaf.style.zIndex = 0;
-    let a = Math.random();
-    
-    if (a > 0.5) {
-      leaf.textContent = '🍃';
-    } else if (a < 0.25) {
-      leaf.textContent = '🍂';
-    } else if (a < 0.4) {
-      leaf.textContent = '🌿';
-    } else if (a < 0.6) {
-      leaf.textContent = '🍁';
-    } else if (a < 0.7) {
-      leaf.textContent = '🍀';
-    }
-
-    leaf.style.left = `${Math.random() * 100}vw`;
-    const fallDuration = Math.random() * 2 + 2;
-    leaf.style.animationDuration = `${fallDuration}s`;
-    document.body.appendChild(leaf);
-
-    // Remove the leaf after it falls out of the viewport
-    setTimeout(() => {
-      leaf.remove();
-    }, fallDuration * 1000);
-  };
 
   // Function to start the falling leaves effect
   const startFallingLeaves = () => {
