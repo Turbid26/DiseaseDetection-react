@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';  // Import useAuth to handle global login state
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth();  // Destructure login from useAuth context to update login status
   const [isRegistering, setIsRegistering] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -101,6 +103,11 @@ const Login = () => {
     try {
       const res = await axios.post('http://localhost:5000/api/auth/login', { username, password });
       alert(res.data.msg);
+
+      // Call the login function from useAuth to update the global login state
+      authLogin();  
+      
+      // Redirect the user to the home page after successful login
       navigate('/home');
     } catch (err) {
       console.error(err.response.data.msg);

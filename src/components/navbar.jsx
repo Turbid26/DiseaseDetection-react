@@ -1,9 +1,12 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import {useAuth} from '../context/AuthContext';
+
+  
 
 const Navbar = () => {
   const navigate = useNavigate();
-
+  const{isLoggedIn,logout} = useAuth();
   const handleLoginRedirect = () => {
     navigate('/'); // Redirect to the login page
   };
@@ -49,13 +52,24 @@ const Navbar = () => {
         <li style={styles.li}><Link to="/History">History</Link></li>
         <li style={styles.li}><Link to="/blog">Blog</Link></li>
         <li style={styles.li}><Link to="/contact">Contact</Link></li>
-        <li style={styles.li} onClick={handleLoginRedirect}>
+        
+        {isLoggedIn ?(
+          <>
+          <li style={styles.li} onClick={handleLoginRedirect}>
+          <i className='bx bx-user' style={styles.icon}></i>
+          <label htmlFor="bx-user" style={{ cursor: 'pointer' }}>Logout</label>
+        </li>
+          </>
+        ) :(
+          <li style={styles.li} onClick={handleLoginRedirect}>
           <i className='bx bx-user' style={styles.icon}></i>
           <label htmlFor="bx-user" style={{ cursor: 'pointer' }}>Login</label>
         </li>
+        )}
       </ul>
     </nav>
   );
 };
+
 
 export default Navbar;

@@ -7,9 +7,11 @@ import Contact from './components/contact';
 import Services from './components/services';
 import History from './components/history';
 import Blog from './components/blog';
+import { AuthProvider } from './context/AuthContext'
 
 function App() {
   return (
+    <AuthProvider>
     <Router>
       <Routes>
         <Route path="/" element={<Login />} /> {/* No Navbar here */}
@@ -21,6 +23,7 @@ function App() {
 
       </Routes>
     </Router>
+    </AuthProvider>
   );
 }
 
