@@ -42,6 +42,7 @@ const Services = () => {
       setMessage('Image uploaded successfully!');
     } catch (error) {
       setMessage('Error uploading image.');
+      console.error('Upload error:', error.response ? error.response.data : error.message);
     }
   };
 

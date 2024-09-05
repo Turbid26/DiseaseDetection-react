@@ -4,14 +4,14 @@ const express = require('express');
 const router = express.Router();
 const cloudinary = require('../cloudinaryConfig');
 const multer = require('multer');
-const Upload = require('../models/upload');
+const Upload = require('../models/upload'); 
 
 // Configure multer
 const storage = multer.memoryStorage();
 const uploadMiddleware = multer({ storage: storage });
 
 // Route for image upload
-router.post('/upload', uploadMiddleware.single('image'), async (req, res) => {
+router.post('/', uploadMiddleware.single('image'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded.' });
