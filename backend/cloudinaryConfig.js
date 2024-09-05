@@ -6,7 +6,7 @@ cloudinary.config({
   api_secret: "GyL_L3BGlKNXMtMyV_ciSvioftU",
 });
 
-async function uploadImage() {
+/*async function uploadImage() {
   try {
     const image = 'C:/Users/Raghu/Downloads/test-img.jpg'; // Remove unnecessary quotes
     const result = await cloudinary.uploader.upload(image);
@@ -15,7 +15,7 @@ async function uploadImage() {
     console.error('Error uploading image:', error);
   }
 }
-
+*/
 // Call the function (for testing purposes)
 //uploadImage();
 
