@@ -156,7 +156,7 @@ const Services = () => {
 
   return (
     <div style={styles.services}>
-      <h1 style={styles.heading}>Upload and Classify an Image</h1>
+      <h1 style={styles.heading}>Classify an Image</h1>
       <div style={styles.uploadBox}>
         {previewImage ? (
           <img src={previewImage} alt="Preview" style={styles.previewImage} />
