@@ -1,29 +1,29 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { HfInference } from '@huggingface/inference';
+
+const hf = new HfInference('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');
 
 const Services = () => {
-  const [selectedImage, setSelectedImage] = useState(null); // Stores the selected file
-  const [previewImage, setPreviewImage] = useState(null); // Stores the preview URL
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [previewImage, setPreviewImage] = useState(null);
+  const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
   const [message, setMessage] = useState('');
-  const [isLoggedIn] = useState(true); // Placeholder for logged-in state
+  const [classificationResult, setClassificationResult] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Handle image selection
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setSelectedImage(file); // Store the file in state
-      setPreviewImage(URL.createObjectURL(file)); // Create a preview URL
+      setSelectedImage(file);
+      setPreviewImage(URL.createObjectURL(file));
     }
   };
 
   // Handle image upload
   const handleUpload = async (e) => {
     e.preventDefault();
-
-    if (!isLoggedIn) {
-      alert('You must be logged in to upload');
-      return;
-    }
 
     if (!selectedImage) {
       setMessage('Please select an image first.');
@@ -34,19 +34,58 @@ const Services = () => {
     formData.append('image', selectedImage);
 
     try {
-      await axios.post('http://localhost:5000/api/upload', formData, {
+      setIsLoading(true);
+      const response = await axios.post('http://localhost:5000/api/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+
+      const imageUrl = response.data.url;
+      setUploadedImageUrl(imageUrl);
       setMessage('Image uploaded successfully!');
+
+      // Call Hugging Face API for classification
+      classifyImage(imageUrl);
+
     } catch (error) {
       setMessage('Error uploading image.');
       console.error('Upload error:', error.response ? error.response.data : error.message);
     }
   };
 
-  // Styles as a JavaScript object
+  // Classify image using Hugging Face Inference API
+  const classifyImage = async (imageUrl) => {
+    try {
+      const result = await hf.imageClassification({
+        data: imageUrl,  // Use the URL of the uploaded image
+        model: 'nickmuchi/yolos-small-plant-disease-detection'
+      });
+
+      // Set the classification result from the Hugging Face API response
+      setClassificationResult(result);
+      setIsLoading(false);
+
+    } catch (error) {
+      setMessage('Error classifying image.');
+      console.error('Classification error:', error.response ? error.response.data : error.message);
+      setIsLoading(false);
+    }
+  };
+
+  // Format and render classification results
+  const renderClassificationResults = () => {
+    if (!classificationResult || !Array.isArray(classificationResult)) return null;
+  
+    return classificationResult.map((result, index) => (
+      <div key={index}>
+        <p>Disease: {result.label}</p>
+        <p>Accuracy: {result.score.toFixed(2)*100}%</p>
+      </div>
+    ));
+  };
+  
+
   const styles = {
     services: {
       backgroundColor: 'white',
@@ -98,19 +137,26 @@ const Services = () => {
       fontSize: '16px',
       marginTop: '10px',
     },
-    buttonHover: {
-      backgroundColor: '#45a049',
-    },
     message: {
       fontSize: '16px',
       color: '#333',
+      marginTop: '20px',
+    },
+    classificationResult: {
+      fontSize: '18px',
+      color: '#4CAF50',
+      marginTop: '20px',
+    },
+    loading: {
+      fontSize: '18px',
+      color: '#FF5733',
       marginTop: '20px',
     },
   };
 
   return (
     <div style={styles.services}>
-      <h1 style={styles.heading}>Upload an Image</h1>
+      <h1 style={styles.heading}>Upload and Classify an Image</h1>
       <div style={styles.uploadBox}>
         {previewImage ? (
           <img src={previewImage} alt="Preview" style={styles.previewImage} />
@@ -123,6 +169,12 @@ const Services = () => {
         <button onClick={handleUpload} style={styles.button}>Upload Image</button>
       </div>
       <p style={styles.message}>{message}</p>
+
+      {/* Loading Spinner or Message */}
+      {isLoading && <p style={styles.loading}>Classifying image...</p>}
+
+      {/* Display the classification result */}
+      <div>{renderClassificationResults()}</div>
     </div>
   );
 };
