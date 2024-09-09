@@ -17,6 +17,10 @@ router.post('/', uploadMiddleware.single('image'), async (req, res) => {
       return res.status(400).json({ error: 'No file uploaded.' });
     }
 
+    const username = req.body.username || 'guestUser';
+    const diagnosis = req.body.diagnosis || 'Unidentified';
+    const accuracy = req.body.accuracy || 'N/A';
+
     // Upload image to Cloudinary
     const result = await new Promise((resolve, reject) => {
       cloudinary.uploader.upload_stream({
@@ -31,7 +35,9 @@ router.post('/', uploadMiddleware.single('image'), async (req, res) => {
     // Save image URL and username to MongoDB
     const newUpload = new Upload({
       url: result.secure_url,
-      username: 'guestUser', // Placeholder username
+      username: username, 
+      diagnosis: diagnosis,
+      accuracy: accuracy
     });
     await newUpload.save();
 

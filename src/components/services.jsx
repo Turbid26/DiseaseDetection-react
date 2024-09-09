@@ -7,7 +7,6 @@ const hf = new HfInference('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');
 const Services = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setPreviewImage] = useState(null);
-  const [uploadedImageUrl, setUploadedImageUrl] = useState(null);
   const [message, setMessage] = useState('');
   const [classificationResult, setClassificationResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +31,7 @@ const Services = () => {
 
     const formData = new FormData();
     formData.append('image', selectedImage);
+    formData.append('username', localStorage.getItem('username'));
 
     try {
       setIsLoading(true);
@@ -42,7 +42,7 @@ const Services = () => {
       });
 
       const imageUrl = response.data.url;
-      setUploadedImageUrl(imageUrl);
+
       setMessage('Image uploaded successfully!');
 
       // Call Hugging Face API for classification
