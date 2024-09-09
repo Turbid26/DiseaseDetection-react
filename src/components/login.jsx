@@ -103,7 +103,8 @@ const Login = () => {
     try {
       const res = await axios.post('http://localhost:5000/api/auth/login', { username, password });
       alert(res.data.msg);
-
+      
+      localStorage.setItem('username', username);
       // Call the login function from useAuth to update the global login state
       authLogin();  
       
