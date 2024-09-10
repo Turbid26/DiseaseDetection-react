@@ -19,7 +19,7 @@ router.post('/', uploadMiddleware.single('image'), async (req, res) => {
 
     const username = req.body.username || 'guestUser';
     const diagnosis = req.body.diagnosis || 'Unidentified';
-    const accuracy = req.body.accuracy || 'N/A';
+    const accuracy = req.body.accuracy || 0;
 
     // Upload image to Cloudinary
     const result = await new Promise((resolve, reject) => {

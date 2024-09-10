@@ -6,7 +6,7 @@ const uploadSchema = new mongoose.Schema({
   uploadedAt: { type: Date, default: Date.now },
   username: { type: String, required: true }, // Add username field
   diagnosis: {type: String, required: true},
-  accuracy: {type: Double, required: true}
+  accuracy: {type: Number, required: true}
 });
 
 const Upload = mongoose.model('Upload', uploadSchema);
