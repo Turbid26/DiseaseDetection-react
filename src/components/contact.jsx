@@ -176,7 +176,7 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/contact/submit', formData);
+      await axios.post('./api/contact/submit', formData);
       alert('Form submitted successfully');
     } catch (error) {
       alert('Form not submitted');
