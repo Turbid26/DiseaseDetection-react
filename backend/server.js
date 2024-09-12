@@ -13,7 +13,7 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // Middleware
-app.use(cors({origin: 'https://agridiag.com'}));
+app.use(cors({origin: 'https://agridiag.info'}));
 
 app.use(express.json());
 
