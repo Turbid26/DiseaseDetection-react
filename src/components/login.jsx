@@ -40,6 +40,10 @@ const Login = () => {
     navigate('/home');
   };
 
+  const handleForgotPassword = () => {
+    navigate('/forgotpassword');
+  };
+
   const toggleForm = () => {
     setIsRegistering(!isRegistering);
   };
@@ -284,7 +288,7 @@ const Login = () => {
                 <label>
                   <input type="checkbox" /> Remember me
                 </label>
-                <button type="button" style={styles.emptyButton}>Forgot Password?</button>
+                <button onClick={handleForgotPassword} type="button" style={styles.emptyButton} >Forgot Password?</button>
               </>
             )}
           </div>

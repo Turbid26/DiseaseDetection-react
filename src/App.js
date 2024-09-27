@@ -8,6 +8,8 @@ import Services from './components/services';
 import History from './components/history';
 import Blog from './components/blog';
 import { AuthProvider } from './context/AuthContext'
+import ForgotPassword from './components/forgotpassword';
+import ResetPassword from './components/resetpassword';
 
 function App() {
   return (
@@ -20,7 +22,8 @@ function App() {
         <Route path="/services" element={<><Navbar /><Services /></>} /> {/* Navbar included */}
         <Route path="/history" element={<><Navbar /><History /></>} /> {/* Navbar included */}
         <Route path="/blog" element={<><Navbar /><Blog /></>} /> {/* Navbar included */}
-
+        <Route path="/forgotpassword" element={<ForgotPassword />} />
+        <Route path="/resetpassword" element={<ResetPassword />} />
       </Routes>
     </Router>
     </AuthProvider>
