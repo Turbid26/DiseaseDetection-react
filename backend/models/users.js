@@ -31,4 +31,5 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model('User', UserSchema);
+// Check if the model already exists in mongoose.models to prevent overwriting
+module.exports = mongoose.models.User || mongoose.model('User', UserSchema);
