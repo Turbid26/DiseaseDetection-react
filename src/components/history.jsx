@@ -1,43 +1,108 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import '../styles/history.css'; // Assuming the CSS is in the same path
+import axios from 'axios';
 
 const History = () => {
-  // State to hold the diagnosis history data
   const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
-  // Fetch the history data from the API when the component mounts
+  // Fetch user history on component mount
   useEffect(() => {
-    fetch('/api/history')
-      .then(response => response.json())
-      .then(data => setHistory(data))
-      .catch(error => console.error('Error fetching diagnosis history:', error));
+    const fetchHistory = async () => {
+      try {
+        setLoading(true);
+        setError('');
+        
+        // Get the JWT token from localStorage or other storage method
+        const token = localStorage.getItem('token');
+        if (!token) {
+          setError('You are not authenticated.');
+          setLoading(false);
+          return;
+        }
+
+        // Fetch history from the API
+        const response = await axios.get('/api/history', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setHistory(response.data);
+      } catch (err) {
+        setError(err.response?.data?.message || 'Error fetching history.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHistory();
   }, []);
 
+  // Inline styles for the component
+  const styles = {
+    container: {
+      maxWidth: '800px',
+      margin: '0 auto',
+      padding: '20px',
+      textAlign: 'center',
+    },
+    list: {
+      listStyleType: 'none',
+      padding: 0,
+    },
+    item: {
+      display: 'flex',
+      gap: '20px',
+      marginBottom: '20px',
+      padding: '10px',
+      border: '1px solid #ddd',
+      borderRadius: '5px',
+      backgroundColor: '#f9f9f9',
+      alignItems: 'center',
+    },
+    image: {
+      width: '150px',
+      height: '150px',
+      objectFit: 'cover',
+      borderRadius: '5px',
+    },
+    error: {
+      color: 'red',
+      fontWeight: 'bold',
+    },
+  };
+
+  // Render logic
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div style={styles.error}>{error}</div>;
+  }
+
+  if (history.length === 0) {
+    return <div>No history found.</div>;
+  }
+
   return (
-    <div className="container">
-      <main>
-        <h1 style={{ textAlign: 'center', position: 'relative', top: '20px' }}>Diagnosis History</h1>
-        
-        {/* Render each diagnosis item */}
-        {history.map((item, index) => (
-          <Link to={`/projects/${item._id}`} key={index}>
-            <div className="diagnosis-card">
-              <img id="p" src={item.image} alt={item.diagnosis_name} style={{ maxWidth: '100px', height: 'auto', marginRight: '20px' }} />
-              <div>
-                <h1 style={{ position: 'relative', left: '350px', color: 'darkgreen' }}>Diagnosis {index + 1}</h1>
-                <h2 style={{ position: 'relative', left: '350px', color: 'darkblue' }}>{item.diagnosis_name}</h2>
-                <p style={{ fontSize: '20px', color: 'black', zIndex: 10 }}>
-                  Accuracy: {(item.accuracy * 100).toFixed(2)}%
-                </p>
-                <p style={{ fontSize: '16px', color: 'gray' }}>
-                  {item.description || 'No additional information available.'} {/* Add description or placeholder */}
-                </p>
-              </div>
+    <div style={styles.container}>
+      <h1>Your Upload History</h1>
+      <ul style={styles.list}>
+        {history.map((item) => (
+          <li key={item._id} style={styles.item}>
+            <div>
+              <img src={item.url} alt="Uploaded" style={styles.image} />
             </div>
-          </Link>
+            <div>
+              <p><strong>Diagnosis:</strong> {item.diagnosis}</p>
+              <p><strong>Accuracy:</strong> {item.accuracy}%</p>
+              <p><strong>Uploaded At:</strong> {new Date(item.uploadedAt).toLocaleString()}</p>
+            </div>
+          </li>
         ))}
-      </main>
+      </ul>
     </div>
   );
 };

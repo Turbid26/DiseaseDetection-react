@@ -8,7 +8,7 @@ const contactRoute = require('./routes/contact');
 const uploadRoute = require('./routes/upload');
 const authRoute = require('./routes/auth');
 const historyRoute = require('./routes/history');
-const passwordRoute = require('./routes/forgot-password');  // Import the new password routes
+const passwordRoute = require('./routes/password');  // Import the new password routes
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -16,6 +16,7 @@ const port = process.env.PORT || 5000;
 // Middleware
 app.use(cors());
 app.use(express.json());
+
 
 // MongoDB Atlas Connection
 const uri = process.env.MONGODB_URI;

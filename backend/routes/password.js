@@ -33,7 +33,7 @@ router.post('/forgot-password', async (req, res) => {
     await user.save();
 
     // Send email with reset link
-    const resetLink = `http://your-frontend-domain.com/reset-password?token=${token}`;
+    const resetLink = `http://agridiag.info/reset-password?token=${token}`;
     await transporter.sendMail({
       to: user.email,
       subject: 'Password Reset Request',
@@ -45,8 +45,7 @@ router.post('/forgot-password', async (req, res) => {
     console.error(error);
     res.status(500).send('Error sending reset link');
   }
-});
-
+})
 // Route: Reset Password
 router.post('/reset-password', async (req, res) => {
   const { token, newPassword } = req.body;
