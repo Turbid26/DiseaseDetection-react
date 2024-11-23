@@ -13,13 +13,13 @@ const History = () => {
         setLoading(true);
         setError('');
         
-        // Get the JWT token from localStorage or other storage method
-        // const token = localStorage.getItem('token');
-        // if (!token) {
-        //   setError('You are not authenticated.');
-        //   setLoading(false);
-        //   return;
-        // }
+        //Get the JWT token from localStorage or other storage method
+        const token = localStorage.getItem('token');
+        if (!token) {
+          setError('You are not authenticated.');
+          setLoading(false);
+          return;
+        }
 
         // Fetch history from the API
         const response = await axios.get('/api/history', {
