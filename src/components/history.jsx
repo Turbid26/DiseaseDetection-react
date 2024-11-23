@@ -7,6 +7,7 @@ const History = () => {
   const [error, setError] = useState('');
 
   // Fetch user history on component mount
+  //
   useEffect(() => {
     const fetchHistory = async () => {
       try {
