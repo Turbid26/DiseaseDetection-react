@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Navbar from './components/navbar'; // Only import if needed
+import Navbar from './components/navbar';
 import Login from './components/login';
 import Home from './components/home';
 import Contact from './components/contact';
 import Services from './components/services';
 import History from './components/history';
 import Blog from './components/blog';
-import { AuthProvider } from './context/AuthContext'
+import { AuthProvider } from './context/AuthContext';
 import ForgotPassword from './components/forgotpassword';
 import ResetPassword from './components/resetpassword';
 import PrivateRoute from './components/privateRoute';

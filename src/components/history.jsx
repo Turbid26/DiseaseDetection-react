@@ -13,7 +13,7 @@ const History = () => {
         setLoading(true);
         setError('');
         
-        // Get the JWT token from localStorage or other storage method
+        //Get the JWT token from localStorage or other storage method
         const token = localStorage.getItem('token');
         if (!token) {
           setError('You are not authenticated.');
