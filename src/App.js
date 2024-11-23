@@ -10,6 +10,7 @@ import Blog from './components/blog';
 import { AuthProvider } from './context/AuthContext'
 import ForgotPassword from './components/forgotpassword';
 import ResetPassword from './components/resetpassword';
+import PrivateRoute from './components/privateRoute';
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <Route path="/home" element={<><Navbar /><Home /></>} /> {/* Navbar included */}
         <Route path="/contact" element={<><Navbar /><Contact /></>} /> {/* Navbar included */}
         <Route path="/services" element={<><Navbar /><Services /></>} /> {/* Navbar included */}
-        <Route path="/history" element={<><Navbar /><History /></>} /> {/* Navbar included */}
+        <PrivateRoute path="/history" element={<><Navbar /><History /></>} /> {/* Navbar included */}
         <Route path="/blog" element={<><Navbar /><Blog /></>} /> {/* Navbar included */}
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />

@@ -16,7 +16,7 @@ const authMiddleware = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Find the user by ID (you can also add checks for other fields if needed)
-    const user = await User.findOne({ _id: decoded.userId });
+    const user = await User.findOne({ _id: decoded.username });
 
     // If no user is found, send an error response
     if (!user) {

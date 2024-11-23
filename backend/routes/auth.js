@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken'); // Import jsonwebtoken
 const User = require('../models/users');
 
 const router = express.Router();
@@ -69,7 +70,11 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
-    res.json({ msg: 'Login successful' });
+    // Generate a JWT token
+    const payload = { userId: user._id, username: user.username };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    res.json({ msg: 'Login successful', token });
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server error');
