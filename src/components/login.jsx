@@ -51,7 +51,7 @@ const Login = () => {
   const toggleForm = () => {
     setIsRegistering(!isRegistering);
   };
-
+//
   const handleChange = (e) => {
     setFormData({
       ...formData,
