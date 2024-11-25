@@ -10,7 +10,7 @@ const uploadRoute = require('./routes/upload');
 const authRoute = require('./routes/auth');
 const historyRoute = require('./routes/history');
 const passwordRoute = require('./routes/password');  // Import the new password routes
-
+//...
 const app = express();
 const port = process.env.PORT || 5000;
 
