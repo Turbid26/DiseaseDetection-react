@@ -40,9 +40,9 @@ const Login = () => {
     navigate('/home');
   };
 
-  const handleForgotPassword = () => {
-    navigate('/forgotpassword');
-  };
+  // const handleForgotPassword = () => {
+  //   navigate('/forgotpassword');
+  // };
 
   const toggleForm = () => {
     setIsRegistering(!isRegistering);
