@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext'; // Import useAuth for managing global login state
+import { useAuth } from '../context/AuthContext';  // Import useAuth to handle global login state
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login: authLogin, setToken } = useAuth(); // Destructure login and setToken from useAuth
+  const { login: authLogin,setToken } = useAuth();  // Destructure login from useAuth context to update login status
   const [isRegistering, setIsRegistering] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -34,7 +34,14 @@ const Login = () => {
       }
     `;
     styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-  }, []);
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/home');
+    }
+  }, [navigate]);
+
+  
 
   const handleGuestLogin = () => {
     navigate('/home');
@@ -109,16 +116,15 @@ const Login = () => {
       alert(res.data.msg);
 
       const { token } = res.data;
-
-      // Store the token in localStorage for persistence
       localStorage.setItem('token', token);
+
+     
       localStorage.setItem('username', username);
-
-      // Set the token globally using the Auth context
-      setToken(token);
-      authLogin();
-
-      // Redirect to the home page
+      // Call the login function from useAuth to update the global login state
+      authLogin(); 
+      setToken(token) 
+     
+      // Redirect the user to the home page after successful login
       navigate('/home');
     } catch (err) {
       console.error(err.response.data.msg);
@@ -289,24 +295,28 @@ const Login = () => {
             </div>
           )}
           <div style={styles.remember}>
-            <label>
-              <input type="checkbox" />
-              Remember Me
-            </label>
+            {!isRegistering && (
+              <>
+                <label>
+                  <input type="checkbox" /> Remember me
+                </label>
+                <button onClick={handleForgotPassword} type="button" style={styles.emptyButton} >Forgot Password?</button>
+              </>
+            )}
           </div>
-          <button type="submit" style={styles.forgetPasswordButton}>{isRegistering ? 'Register' : 'Login'}</button>
+          <button type="submit" style={styles.forgetPasswordButton}>
+            {isRegistering ? 'Register' : 'Login'}
+          </button>
         </form>
         <div style={styles.create}>
-          <span>
-            {isRegistering ? 'Already have an account?' : 'Don’t have an account?'}
-            <button onClick={toggleForm} style={styles.emptyButton}>
-              {isRegistering ? 'Login here' : 'Register here'}
-            </button>
-          </span>
+          <span>{isRegistering ? 'Already have an account?' : "Don't have an account?"}</span>
+          <button onClick={toggleForm} style={styles.createButton}>
+            {isRegistering ? 'Login' : 'Create Account'}
+          </button>
         </div>
       </div>
     </div>
   );
 };
-
+//test
 export default Login;
