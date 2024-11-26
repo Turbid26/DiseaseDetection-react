@@ -36,7 +36,7 @@ const Login = () => {
     styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('/home');
+      navigate('/');
     }
   }, [navigate]);
 
