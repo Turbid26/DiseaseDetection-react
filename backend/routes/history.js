@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
 const Upload = require('../models/upload'); // Import the Upload model
-const authMiddleware = require('../routes/authMiddelware'); // Import auth middleware
+
 
 // Get upload history for the logged-in user
-router.get('/', authMiddleware, async (req, res) => {
+router.post('/history', async (req, res) => {
   try {
-    // Get the username from the authenticated user
-    const username = req.user.username;
+    const user = await User.findOne({ username });
 
-    // Find all uploads associated with the user's username, sorted by most recent
+    if (!user) {
+      return res.status(400).json({ msg: 'please log in to view history' });
+    }
+
     const uploads = await Upload.find({ username }).sort({ uploadedAt: -1 });
 
     if (!uploads.length) {
@@ -18,7 +20,8 @@ router.get('/', authMiddleware, async (req, res) => {
 
     // Respond with the uploads
     res.status(200).json(uploads);
-  } catch (error) {
+  }
+   catch (error) {
     console.error('Error fetching upload history:', error);
     res.status(500).json({ message: 'Error retrieving upload history.' });
   }

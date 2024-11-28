@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';  // Import useAuth to handle g
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login: authLogin ,setToken} = useAuth();  // Destructure login from useAuth context to update login status
+  const { login: authLogin } = useAuth();  // Destructure login from useAuth context to update login status
   const [isRegistering, setIsRegistering] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -34,11 +34,7 @@ const Login = () => {
       }
     `;
     styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-    const token = localStorage.getItem('token');
-    if (token) {
-      navigate('/');
-    }
-  }, [navigate]);
+  }, []);
 //
   const handleGuestLogin = () => {
     navigate('/home');
@@ -110,18 +106,10 @@ const Login = () => {
     e.preventDefault();
     try {
       const res = await axios.post('./api/auth/login', { username, password });
-      
-
-      const { token } = res.data;
-      localStorage.setItem('token', token);
-
-     
       localStorage.setItem('username', username);
       // Call the login function from useAuth to update the global login state
       authLogin();  
-      setToken(token);
       alert(res.data.msg);
-     
       // Redirect the user to the home page after successful login
       navigate('/home');
     } catch (err) {

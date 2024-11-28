@@ -15,18 +15,16 @@ const History = () => {
         setError('');
         
         //Get the JWT token from localStorage or other storage method
-        const token = localStorage.getItem('token');
-        if (!token) {
-          setError('You are not authenticated.');
+        const username = localStorage.getItem('username');
+        if (!username) {
+          setError('you are not registered.');
           setLoading(false);
           return;
         }
 
         // Fetch history from the API
         const response = await axios.get('/api/history', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: {},
         });
 
         setHistory(response.data);
