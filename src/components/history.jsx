@@ -24,7 +24,12 @@ const History = () => {
 
         // Fetch history from the API
         const response = await axios.get('/api/history', {
-          headers: {},
+          hist: {
+            username: username,
+            diagnosis: diagnosis,
+            accuracy: accuracy,
+            uploadedAt: uploadedAt
+          },
         });
 
         setHistory(response.data);
