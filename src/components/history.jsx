@@ -13,25 +13,13 @@ const History = () => {
       try {
         setLoading(true);
         setError('');
-        
-        //Get the JWT token from localStorage or other storage method
         const username = localStorage.getItem('username');
         if (!username) {
           setError('you are not registered.');
           setLoading(false);
           return;
         }
-
-        // Fetch history from the API
-        const response = await axios.get('/api/history', {
-          hist: {
-            username: username,
-            diagnosis: diagnosis,
-            accuracy: accuracy,
-            uploadedAt: uploadedAt
-          },
-        });
-
+        const response = await axios.get('/api/history');
         setHistory(response.data);
       } catch (err) {
         setError(err.response?.data?.message || 'Error fetching history.');
@@ -41,7 +29,7 @@ const History = () => {
     };
 
     fetchHistory();
-  }, []);
+  }, [history]);
 
   // Inline styles for the component
   const styles = {
