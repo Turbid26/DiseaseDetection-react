@@ -82,18 +82,16 @@ const History = () => {
     <div style={styles.container}>
       <h1>Your Upload History</h1>
       <ul style={styles.list}>
-        {history.map((item) => (
-          <li key={item._id} style={styles.item}>
+          <li key={history._id} style={styles.item}>
             <div>
-              <img src={item.url} alt="Uploaded" style={styles.image} />
+              <img src={history.url} alt="Uploaded" style={styles.image} />
             </div>
             <div>
-              <p><strong>Diagnosis:</strong> {item.diagnosis}</p>
-              <p><strong>Accuracy:</strong> {item.accuracy}%</p>
-              <p><strong>Uploaded At:</strong> {new Date(item.uploadedAt).toLocaleString()}</p>
+              <p><strong>Diagnosis:</strong> {history.diagnosis}</p>
+              <p><strong>Accuracy:</strong> {history.accuracy}%</p>
+              <p><strong>Uploaded At:</strong> {new Date(history.uploadedAt).toLocaleString()}</p>
             </div>
           </li>
-        ))}
       </ul>
     </div>
   );
