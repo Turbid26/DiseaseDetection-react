@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/users');
 const Upload = require('../models/upload'); // Import the Upload model
 
 

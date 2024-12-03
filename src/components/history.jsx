@@ -2,7 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const History = () => {
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState({
+    _id:'',
+    url:'',
+    diagnosis:'',
+    accuracy:'',
+    uploadedAt:'',
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
