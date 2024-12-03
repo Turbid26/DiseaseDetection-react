@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/users');
 const Upload = require('../models/upload'); // Import the Upload model
+const users = require('../models/users');
 
 
 // Get upload history for the logged-in user
 router.post('/history', async (req, res) => {
   try {
-    const user = await User.findOne({ username });
+    const user = await users.findOne({ username });
 
     if (!user) {
       return res.status(400).json({ msg: 'please log in to view history' });
