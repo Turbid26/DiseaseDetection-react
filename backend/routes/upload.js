@@ -17,7 +17,7 @@ router.post('/', uploadMiddleware.single('image'), async (req, res) => {
     }
 
     // Get user details from authMiddleware
-    const username = req.user.username; // Extract username from authenticated user
+    const username = req.body.username; 
     const diagnosis = req.body.diagnosis || 'Unidentified';
     const accuracy = req.body.accuracy || 0;
 

@@ -19,7 +19,12 @@ const History = () => {
           return;
         }
         // Add a timestamp to prevent caching
-        const response = await axios.get(`./api/history?${new Date().getTime()}`);
+        const response = await axios.post('/api/history', {}, {
+          headers: {
+            'Authorization': `${username}` // Send the username in the header
+          }
+        });
+        console.log('Response data:', response.data);  // Add this line to log the response data
         setHistory(response.data);
       } catch (err) {
         setError(err.response?.data?.message || 'Error fetching history.');

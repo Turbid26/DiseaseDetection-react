@@ -41,28 +41,48 @@ const Services = () => {
         },
       });
 
-      const imageUrl = response.data.url;
+      console.log(response);
+
+      const imageUrl = response.data.upload.url;
 
       setMessage('Image uploaded successfully!');
-
+      console.log(imageUrl);
       // Call Hugging Face API for classification
       classifyImage(imageUrl);
 
     } catch (error) {
       setMessage('Error uploading image.');
-      console.error('Upload error:', error.response ? error.response.data : error.message);
+      if (error.response) {
+        // If the server responded with a status other than 2xx
+        console.error('Upload error response:', error.response);
+      } else if (error.request) {
+        // If the request was made but no response was received
+        console.error('Upload error request:', error.request);
+      } else {
+        // Any other error
+        console.error('Upload error message:', error.message);
+      }
     }
   };
 
   // Classify image using Hugging Face Inference API
   const classifyImage = async (imageUrl) => {
     try {
-      const result = await hf.imageClassification({
-        data: imageUrl,  // Use the URL of the uploaded image
-        model: 'nickmuchi/yolos-small-plant-disease-detection'
-      });
+      console.log("Classifying image:", imageUrl);
 
-      // Set the classification result from the Hugging Face API response
+      // Send the request to Hugging Face API
+      const response = await axios.post(
+        "https://api-inference.huggingface.co/models/ozair23/mobilenet_v2_1.0_224-finetuned-plantdisease",
+        { inputs: imageUrl },
+        {
+          headers: {
+            Authorization: `Bearer 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`, // Your Hugging Face token
+          },
+        }
+      );
+  
+      // Handle the classification response
+      const result = response.data;
       setClassificationResult(result);
       setIsLoading(false);
 

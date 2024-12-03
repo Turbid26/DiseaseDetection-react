@@ -5,11 +5,12 @@ const users = require('../models/users');
 
 //
 // Get upload history for the logged-in user
-router.post('/history', async (req, res) => {
-  try {
-    const user = await users.findOne({ username });
+router.post('/', async (req, res) => {
 
-    if (!user) {
+  try {
+    const username = req.headers['authorization'];
+
+    if (!username) {
       return res.status(400).json({ msg: 'please log in to view history' });
     }
 
