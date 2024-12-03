@@ -1,13 +1,23 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import '../styles/home.css'; // Assuming styles are saved in App.css
+
+import BannerCareImage from '../assets/banner_care_effortlessly_75159b4a57.webp';
+import HomeStock from '../assets/home-stock.jpg';
+import Sustainable from '../assets/Sustainable-Innovation-crop-3.png';
+import img from '../assets/c89e77-iStock-1364679535.jpg';
+import green from '../assets/green-energy.webp';
+
+
 
 const Home = () => {
-    // Function to create a leaf element and add to the DOM
+  // Function to create a leaf element and add to the DOM
   const createLeaf = () => {
     const leaf = document.createElement('div');
     leaf.className = 'leaf';
-    leaf.style.zIndex = 0;
     let a = Math.random();
-    
+
+    // Assign random leaf type
     if (a > 0.5) {
       leaf.textContent = '🍃';
     } else if (a < 0.25) {
@@ -20,94 +30,118 @@ const Home = () => {
       leaf.textContent = '🍀';
     }
 
+    // Set random position and animation duration
     leaf.style.left = `${Math.random() * 100}vw`;
     const fallDuration = Math.random() * 1 + 1;
     leaf.style.animationDuration = `${fallDuration}s`;
     document.body.appendChild(leaf);
 
-    // Remove the leaf after it falls out of the viewport
+    // Remove leaf after falling
     setTimeout(() => {
       leaf.remove();
     }, fallDuration * 1000);
   };
 
+  // Start falling leaves on component mount
   useEffect(() => {
-    const startFallingLeaves = () => {
-      setInterval(createLeaf, 500); // Create a new leaf every 500ms
-    };
-  
-    startFallingLeaves();
+    const interval = setInterval(createLeaf, 500); // Create a leaf every 500ms
+    return () => clearInterval(interval); // Cleanup on component unmount
   }, []);
-    return (
-        <div style={{ width: '100%', position: 'relative' }}>
-            {/* Hero Section */}
-            <section style={{
-                color: 'white',
-                justifyContent: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textAlign: 'center',
-                marginTop: '100px',
-                padding: '50px 20px',
-                background: `url(${require('../assets/login-background.jpg')}) no-repeat center center/cover`,
-                zIndex: 0
-            }}>
-                <h1 style={{ fontFamily: 'Poppins' }}>AGRIDIAG</h1>
-                <p style={{ marginTop: '10px', fontSize: '18px', fontFamily: 'Poppins' }}>
-                    We are revolutionizing agricultural diagnostics
-                </p>
-            </section>
 
-            {/* About Us Section */}
-            <section style={{
-                display: 'flex',
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignItems: 'center',
-                margin: '50px auto',
-                padding: '20px',
-                width: '70%',
-                backgroundColor: '#f9f9f9',
-                borderRadius: '10px',
-                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                fontFamily: 'Poppins'
-            }}>
-                <div style={{ flex: 1, paddingRight: '20px' }}>
-                    <button style={{
-                        background: 'none',
-                        border: 'none',
-                        color: '#000306',
-                        fontSize: '14px',
-                        cursor: 'pointer',
-                        padding: '0',
-                        marginLeft: '10px',
-                        textDecoration: 'none'
-                    }}
-                        onMouseOver={(e) => e.target.style.textDecoration = 'underline'}
-                        onMouseOut={(e) => e.target.style.textDecoration = 'none'}
-                    >
-                        About Us
-                    </button>
-                    <p>
-                        Our solution empowers farmers with an AI-driven mobile app for swift and accurate crop disease
-                        diagnosis, minimizing misdiagnosis. Researchers gain access to real-time data and trends via our
-                        blog, while the public can explore a web portal rich with information on disease prevention and the
-                        latest updates, fostering a connected and informed agricultural community.
-                    </p>
-                </div>
-                <img src={require('../assets/home-stock.jpg')} alt="Agricultural Diagnostics"
-                    style={{
-                        flex: 1,
-                        maxWidth: '100%',
-                        borderRadius: '10px',
-                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-                        height: '400px'
-                    }}
-                />
-            </section>
-        </div>
-    );
+  return (
+    <div>
+      {/* Head Content */}
+      <Helmet>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900&display=swap"
+          rel="stylesheet"
+        />
+        <title>AgriDiag | About Us</title>
+      </Helmet>
+
+      {/* Main Content */}
+      <div className="container">
+        <header>
+          <h1>Welcome to AgriDiag</h1>
+          <p>Your trusted partner in modern agriculture</p>
+        </header>
+        <section>
+          <h2>About Us</h2>
+          <p>
+            AgriDiag bridges cutting-edge technology and traditional farming practices to empower farmers and plant
+            enthusiasts worldwide. With our AI-driven diagnostic system, we identify and manage plant diseases with
+            precision, helping crops thrive and ensuring food security.
+          </p>
+          <p>
+            Our custom-built ML model can recognize over <strong>10,000 crop diseases and conditions</strong> with{' '}
+            <strong>96% accuracy</strong>, offering tailored solutions to safeguard your plants. With expert consultations
+            and actionable insights, we make farming smarter, more sustainable, and accessible for everyone.
+          </p>
+        </section>
+        <section>
+          <h2>Learn and Grow with AgriDiag</h2>
+          <p>
+            We believe in the power of <strong>knowledge and innovation</strong>. AgriDiag offers an intuitive platform
+            for farmers and hobbyists to learn about crop health and disease management. Access rich guides, real-time
+            diagnostics, and educational content to sharpen your farming skills while nurturing your crops.
+          </p>
+        </section>
+        <section>
+          <h2>Effortless Crop Care</h2>
+          <p>
+            Simply scan your crop with a smartphone, tablet, or laptop to identify diseases instantly. Our platform
+            provides customized treatment plans, nutrient suggestions, and even weather-based farming tips to optimize
+            yields.
+          </p>
+          <p>
+            Take advantage of <strong>light and moisture meters</strong>, <strong>fertilizer calculators</strong>, and{' '}
+            <strong>pest control strategies</strong> to maintain healthy, productive fields.
+          </p>
+          <img src={BannerCareImage} alt="Effortless Crop Care" />
+        </section>
+        <section>
+          <h2>Expert Guidance Anytime</h2>
+          <p>
+            AgriDiag connects you to a network of certified agricultural experts available 24/7. Whether it's pest
+            outbreaks, soil quality issues, or complex disease patterns, our team is ready to provide personalized advice.
+            With just a few clicks, you can consult with experienced agronomists and botanists who are as invested in your
+            success as you are.
+          </p>
+          <img src={HomeStock} alt="Expert Guidance" />
+        </section>
+        <section>
+          <h2>Sustainability and Innovation</h2>
+          <p>
+            At AgriDiag, we champion sustainable farming practices and biodiversity conservation. By leveraging{' '}
+            <strong>AI, IoT, and AR technologies</strong>, we equip you with tools to adapt to climate challenges while
+            minimizing environmental impact. Together, we aim to create a resilient, green future for agriculture.
+          </p>
+          <img src={Sustainable} alt="Sustainability and Innovation" />
+        </section>
+        <section>
+          <h2>Join the AgriDiag Community</h2>
+          <p>
+            With users spanning continents, AgriDiag is building a vibrant network of farmers, researchers, and
+            enthusiasts committed to transforming agriculture. By sharing stories, challenges, and successes, we
+            collectively learn, grow, and inspire innovation in farming.
+          </p>
+          <img src={img} alt="Community" />
+        </section>
+        <section>
+          <h2>Your Partner for a Greener Tomorrow</h2>
+          <p>
+            At AgriDiag, our mission is clear: to make farming smarter, more efficient, and sustainable. Whether you're
+            managing a small garden or running large-scale operations, AgriDiag is here to support your agricultural
+            journey every step of the way.
+          </p>
+          <p>Join us in reshaping the future of farming. Let's grow, together.</p>
+          <img src={green}alt="Greener Tomorrow" />
+        </section>
+      </div>
+    </div>
+  );
 };
 
 export default Home;
