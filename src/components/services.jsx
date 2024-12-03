@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { HfInference } from '@huggingface/inference';
-
-const hf = new HfInference('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');
 
 const Services = () => {
   const [selectedImage, setSelectedImage] = useState(null);
