@@ -2,13 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const History = () => {
-  const [history, setHistory] = useState({
-    _id:'',
-    url:'',
-    diagnosis:'',
-    accuracy:'',
-    uploadedAt:'',
-  });
+  const [history, setHistory] = useState(null);  // Change to null instead of an empty object
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -20,12 +14,12 @@ const History = () => {
         setError('');
         const username = localStorage.getItem('username');
         if (!username) {
-          setError('you are not registered.');
+          setError('You are not registered.');
           setLoading(false);
           return;
         }
-        const response = await axios.get('/api/history');
-        setHistory(response.data);
+        const response = await axios.get('./api/history');
+        setHistory(response.data);  // Assuming it is an object
       } catch (err) {
         setError(err.response?.data?.message || 'Error fetching history.');
       } finally {
@@ -34,7 +28,7 @@ const History = () => {
     };
 
     fetchHistory();
-  }, [history]);
+  }, []);  // Only run on mount
 
   // Inline styles for the component
   const styles = {
@@ -79,7 +73,7 @@ const History = () => {
     return <div style={styles.error}>{error}</div>;
   }
 
-  if (history.length === 0) {
+  if (!history) {
     return <div>No history found.</div>;
   }
 
@@ -87,16 +81,16 @@ const History = () => {
     <div style={styles.container}>
       <h1>Your Upload History</h1>
       <ul style={styles.list}>
-          <li key={history._id} style={styles.item}>
-            <div>
-              <img src={history.url} alt="Uploaded" style={styles.image} />
-            </div>
-            <div>
-              <p><strong>Diagnosis:</strong> {history.diagnosis}</p>
-              <p><strong>Accuracy:</strong> {history.accuracy}%</p>
-              <p><strong>Uploaded At:</strong> {new Date(history.uploadedAt).toLocaleString()}</p>
-            </div>
-          </li>
+        <li key={history._id} style={styles.item}>
+          <div>
+            <img src={history.url} alt="Uploaded" style={styles.image} />
+          </div>
+          <div>
+            <p><strong>Diagnosis:</strong> {history.diagnosis}</p>
+            <p><strong>Accuracy:</strong> {history.accuracy}%</p>
+            <p><strong>Uploaded At:</strong> {new Date(history.uploadedAt).toLocaleString()}</p>
+          </div>
+        </li>
       </ul>
     </div>
   );
