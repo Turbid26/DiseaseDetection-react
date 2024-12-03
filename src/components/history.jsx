@@ -18,8 +18,9 @@ const History = () => {
           setLoading(false);
           return;
         }
-        const response = await axios.get('./api/history');
-        setHistory(response.data);  // Assuming it is an object
+        // Add a timestamp to prevent caching
+        const response = await axios.get(`./api/history?${new Date().getTime()}`);
+        setHistory(response.data);
       } catch (err) {
         setError(err.response?.data?.message || 'Error fetching history.');
       } finally {
