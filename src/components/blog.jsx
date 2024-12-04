@@ -87,7 +87,7 @@ const Blog = () => {
           placeholder="Content"
           required
         />
-        <button type="submit">Submit Blog</button>
+        <button type="submit">Submit Post</button>
       </form>
 
       {/* Display blog posts */}
