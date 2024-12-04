@@ -31,7 +31,7 @@ const Navbar = () => {
       top: '20px',
       left: '50%',
       transform: 'translateX(-50%)',
-      backgroundColor: 'yellow',
+      backgroundColor: 'cornflowerblue',
       zIndex: 1,
       width: 'auto',
       padding: '10px',

@@ -98,7 +98,7 @@ const styles = {
   footer: {
     marginTop: '70px',
     padding: '20px 40px',
-    backgroundColor: 'rgb(244, 244, 12)',
+    backgroundColor: 'lightblue',
   },
   footerContent: {
     maxWidth: '1200px',

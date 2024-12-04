@@ -69,55 +69,67 @@ const Blog = () => {
   };
 
   return (
-    <div>
-      <h1>Community Discussions</h1>
+    <div className="blog-container">
+  <h1 className="blog-header">Community Discussions</h1>
 
-      {/* Create a new blog */}
-      <form onSubmit={handleSubmitBlog}>
-        <input
-          type="text"
-          value={newBlogTitle}
-          onChange={(e) => setNewBlogTitle(e.target.value)}
-          placeholder="Title"
-          required
-        />
-        <textarea
-          value={newBlogContent}
-          onChange={(e) => setNewBlogContent(e.target.value)}
-          placeholder="Content"
-          required
-        />
-        <button type="submit">Submit Post</button>
-      </form>
+  {/* Create a new blog */}
+  <form onSubmit={handleSubmitBlog} className="blog-form">
+    <input
+      className="blog-input"
+      type="text"
+      value={newBlogTitle}
+      onChange={(e) => setNewBlogTitle(e.target.value)}
+      placeholder="Enter a title for your post"
+      required
+    />
+    <textarea
+      className="blog-textarea"
+      value={newBlogContent}
+      onChange={(e) => setNewBlogContent(e.target.value)}
+      placeholder="Write your post content here"
+      required
+    />
+    <button className="blog-button" type="submit">
+      Submit Post
+    </button>
+  </form>
 
-      {/* Display blog posts */}
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        blogs.map((blog) => (
-          <div key={blog._id}>
-            <h2>{blog.title}</h2>
-            <p>{blog.content}</p>
-            <div>
-              <h3>Comments</h3>
-              <ul>
-                {blog.comments.map((comment, index) => (
-                  <li key={index}>
-                    <strong>{comment.username}:</strong> {comment.comment}
-                  </li>
-                ))}
-              </ul>
-              <textarea
-                value={newComment}
-                onChange={(e) => setNewComment(e.target.value)}
-                placeholder="Add a comment"
-              />
-              <button onClick={() => handleSubmitComment(blog._id)}>Submit Comment</button>
-            </div>
-          </div>
-        ))
-      )}
-    </div>
+  {/* Display blog posts */}
+  {loading ? (
+    <p className="loading-text">Loading...</p>
+  ) : (
+    blogs.map((blog) => (
+      <div key={blog._id} className="blog-post">
+        <h2 className="blog-post-title">{blog.title}</h2>
+        <p className="blog-post-content">{blog.content}</p>
+        <div className="blog-comments-section">
+          <h3 className="blog-comments-header">Comments</h3>
+          <ul className="blog-comments-list">
+            {blog.comments.map((comment, index) => (
+              <li key={index} className="blog-comment">
+                <strong className="comment-author">{comment.username}:</strong>{" "}
+                {comment.comment}
+              </li>
+            ))}
+          </ul>
+          <textarea
+            className="comment-input"
+            value={newComment}
+            onChange={(e) => setNewComment(e.target.value)}
+            placeholder="Write your comment here"
+          />
+          <button
+            className="comment-button"
+            onClick={() => handleSubmitComment(blog._id)}
+          >
+            Submit Comment
+          </button>
+        </div>
+      </div>
+    ))
+  )}
+</div>
+
   );
 };
 
