@@ -82,7 +82,7 @@ const Navbar = () => {
         <li style={styles.li}><Link to="/home">Home</Link></li>
         <li style={styles.li}><Link to="/services">Services</Link></li>
         <li style={styles.li}><Link to="/history">History</Link></li>
-        <li style={styles.li}><Link to="/blog">Blog</Link></li>
+        <li style={styles.li}><Link to="/blog">Community</Link></li>
         <li style={styles.li}><Link to="/contact">Contact</Link></li>
         
         {isLoggedIn ? (

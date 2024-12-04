@@ -189,7 +189,7 @@ const Contact = () => {
         <div style={styles.formContainer}>
           <h1 style={styles.heading}>Contact Us</h1>
           <p style={styles.paragraph}>
-            Interested in knowing more, requesting a large product order, or would just like to say hi? Fill the form below to get in touch with the Farm team.
+            Interested in knowing more, or would just like to say hi? Fill the form below to get in touch with the AgriDiag team.
           </p>
           <p style={styles.imageSide} />
           <form onSubmit={handleSubmit}>
@@ -240,18 +240,16 @@ const Contact = () => {
               <ul style={styles.footerColumnList}>
                 <li style={styles.footerColumnListItem}><Link to="/home" style={styles.footerColumnListItemLink}>Home</Link></li>
                 <li style={styles.footerColumnListItem}><Link to="/home" style={styles.footerColumnListItemLink}>About</Link></li>
-                <li style={styles.footerColumnListItem}><Link to="/home" style={styles.footerColumnListItemLink}>Reviews</Link></li>
+                <li style={styles.footerColumnListItem}><Link to="/blog" style={styles.footerColumnListItemLink}>Community Discussions</Link></li>
                 <li style={styles.footerColumnListItem}><Link to="/contact" style={styles.footerColumnListItemLink}>Contact</Link></li>
-                <li style={styles.footerColumnListItem}><Link to="/services" style={styles.footerColumnListItemLink}>Products</Link></li>
+                <li style={styles.footerColumnListItem}><Link to="/services" style={styles.footerColumnListItemLink}>Services</Link></li>
               </ul>
             </div>
             <div style={styles.footerColumn}>
               <h4 style={styles.footerColumnHeading}>Products</h4>
               <ul style={styles.footerColumnList}>
-                <li style={styles.footerColumnListItem}><Link to="/home" style={styles.footerColumnListItemLink}>Smart Nutrition</Link></li>
-                <li style={styles.footerColumnListItem}><Link to="/home" style={styles.footerColumnListItemLink}>Farm Diary</Link></li>
-                <li style={styles.footerColumnListItem}><Link to="/home" style={styles.footerColumnListItemLink}>Smart Watering</Link></li>
-                <li style={styles.footerColumnListItem}><Link to="/home" style={styles.footerColumnListItemLink}>Monitor</Link></li>
+                <li style={styles.footerColumnListItem}><Link to="/services" style={styles.footerColumnListItemLink}>Diagnose Plant</Link></li>
+                <li style={styles.footerColumnListItem}><Link to="/services" style={styles.footerColumnListItemLink}>Search Diseases</Link></li>
               </ul>
             </div>
             <div style={styles.footerColumn}>
@@ -259,15 +257,8 @@ const Contact = () => {
               <ul style={styles.footerColumnList}>
                 <li style={styles.footerColumnListItem}><a href="mailto:info@agriDiag.com" style={styles.footerColumnListItemLink}>info@agriDiag.com</a></li>
                 <li style={styles.footerColumnListItem}><a href="tel:+123456789" style={styles.footerColumnListItemLink}>+123 456 789</a></li>
-                <li style={styles.footerColumnListItem}><p style={{ ...styles.footerColumnListItemLink, color: '#333' }}>123 Farm Lane, Farmtown, FT 12345</p></li>
+                <li style={styles.footerColumnListItem}><p style={{ ...styles.footerColumnListItemLink, color: '#333' }}>address</p></li>
               </ul>
-            </div>
-            <div style={styles.footerColumn}>
-              <h4 style={styles.footerColumnHeading}>Subscribe</h4>
-              <form style={styles.footerForm}>
-                <input type="email" placeholder="Your email" style={styles.footerInput} />
-                <button type="submit" style={styles.footerButton}>Subscribe</button>
-              </form>
             </div>
           </div>
         </div>

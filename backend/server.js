@@ -8,7 +8,8 @@ const contactRoute = require('./routes/contact');
 const uploadRoute = require('./routes/upload');
 const authRoute = require('./routes/auth');
 const historyRoute = require('./routes/history');
-const passwordRoute = require('./routes/password');  // Import the new password routes
+const passwordRoute = require('./routes/password');
+const blogRoute = require('./routes/blog');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -30,8 +31,9 @@ connection.once('open', () => {
 app.use('/api/contact', contactRoute);
 app.use('/api/upload', uploadRoute);
 app.use('/api/auth', authRoute);
-app.use('/api/history', historyRoute); // Correct route path here
+app.use('/api/history', historyRoute);
 app.use('/api/password', passwordRoute);
+app.use('/api/blog', blogRoute)
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../build')));

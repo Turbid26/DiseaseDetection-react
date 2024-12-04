@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import '../styles/services.css'
 
 const Services = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -7,6 +8,11 @@ const Services = () => {
   const [message, setMessage] = useState('');
   const [classificationResult, setClassificationResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  // Search variables
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResult, setSearchResult] = useState(null);
+  const [searchLoading, setSearchLoading] = useState(false);
 
   // Handle image selection
   const handleImageChange = (e) => {
@@ -17,181 +23,145 @@ const Services = () => {
     }
   };
 
-  // Handle image upload
+  // Handle image upload and classification
   const handleUpload = async (e) => {
     e.preventDefault();
-
+  
     if (!selectedImage) {
       setMessage('Please select an image first.');
       return;
     }
-
+  
     const formData = new FormData();
     formData.append('image', selectedImage);
     formData.append('username', localStorage.getItem('username'));
-
+  
     try {
       setIsLoading(true);
-      const response = await axios.post('./api/upload', formData, {
+      // Step 1: Upload the image to the backend
+      const uploadResponse = await axios.post('/api/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
-
-      console.log(response);
-
-      const imageUrl = response.data.upload.url;
-
+  
+      // Extract image URL and username from the response
+      const { url: imageUrl, username } = uploadResponse.data.upload;
+  
       setMessage('Image uploaded successfully!');
-      console.log(imageUrl);
-      // Call Hugging Face API for classification
-      classifyImage(imageUrl);
-
+      console.log('Uploaded Image URL:', imageUrl);
+  
+      // Step 2: Classify the image using the /classify route
+      classifyImage(imageUrl, username);  // Pass the image URL and username
+  
     } catch (error) {
       setMessage('Error uploading image.');
-      if (error.response) {
-        // If the server responded with a status other than 2xx
-        console.error('Upload error response:', error.response);
-      } else if (error.request) {
-        // If the request was made but no response was received
-        console.error('Upload error request:', error.request);
-      } else {
-        // Any other error
-        console.error('Upload error message:', error.message);
-      }
+      console.error('Upload error:', error);
+    }
+  };
+  
+  // Classify the image by calling the /classify route
+  const classifyImage = async (imageUrl, username) => {
+    try {
+      console.log("Classifying image:", imageUrl);
+  
+      // Step 3: Send the image URL to the /classify route to get diagnosis and accuracy
+      const classifyResponse = await axios.post('/api/upload/classify', { imageUrl, username });
+  
+      // Get the classification result (diagnosis and accuracy)
+      const { diagnosis, accuracy } = classifyResponse.data;
+  
+      setClassificationResult({ diagnosis, accuracy });
+      setIsLoading(false);
+      setMessage('Image classified successfully!');
+  
+    } catch (error) {
+      setMessage('Error classifying image.');
+      console.error('Classification error:', error);
+      setIsLoading(false);
     }
   };
 
-  // Classify image using Hugging Face Inference API
-  const classifyImage = async (imageUrl) => {
-    try {
-      console.log("Classifying image:", imageUrl);
-
-      // Send the request to Hugging Face API
-      const response = await axios.post(
-        "https://api-inference.huggingface.co/models/ozair23/mobilenet_v2_1.0_224-finetuned-plantdisease",
-        { inputs: imageUrl },
-        {
-          headers: {
-            Authorization: `Bearer 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`, // Your Hugging Face token
-          },
-        }
-      );
+  // Handle search query
+  const handleSearch = async () => {
+    if (!searchQuery.trim()) {
+      setSearchResult(null);
+      return;
+    }
   
-      // Handle the classification response
-      const result = response.data;
-      setClassificationResult(result);
-      setIsLoading(false);
-
+    setSearchLoading(true);
+    try {
+      // Use the Wikipedia REST API with the endpoint `page/summary/{topic}`
+      const response = await axios.get(`https://en.wikipedia.org/api/rest_v1/page/summary/${searchQuery}`, {
+        params: {
+          origin: '*' // Allow cross-origin requests (CORS)
+        },
+      });
+  
+      if (response.data && response.data.title && response.data.extract) {
+        setSearchResult(response.data.extract);
+      } else {
+        setSearchResult('No results found or invalid disease name.');
+      }
     } catch (error) {
-      setMessage('Error classifying image.');
-      console.error('Classification error:', error.response ? error.response.data : error.message);
-      setIsLoading(false);
+      console.error('Error fetching search results:', error);
+      setSearchResult('Error fetching search results.');
+    } finally {
+      setSearchLoading(false);
     }
   };
 
   // Format and render classification results
   const renderClassificationResults = () => {
-    if (!classificationResult || !Array.isArray(classificationResult)) return null;
+    if (!classificationResult) return null;
   
-    return classificationResult.map((result, index) => (
-      <div key={index}>
-        <p>Disease: {result.label}</p>
-        <p>Accuracy: {result.score.toFixed(2)*100}%</p>
+    return (
+      <div>
+        <p>Disease: {classificationResult.diagnosis}</p>
+        <p>Accuracy: {classificationResult.accuracy.toFixed(2)}%</p>
       </div>
-    ));
-  };
-  
-
-  const styles = {
-    services: {
-      backgroundColor: 'white',
-      padding: '40px',
-      maxWidth: '800px',
-      margin: '0 auto',
-      textAlign: 'center',
-    },
-    heading: {
-      fontSize: '32px',
-      marginBottom: '20px',
-      color: '#333',
-    },
-    uploadBox: {
-      border: '2px dashed grey',
-      padding: '20px',
-      borderRadius: '10px',
-      backgroundColor: '#f9f9f9',
-      position: 'relative',
-      display: 'inline-block',
-      width: '100%',
-      maxWidth: '500px',
-      margin: '0 auto',
-      overflow: 'hidden',
-    },
-    placeholder: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '200px',
-      backgroundColor: '#eaeaea',
-    },
-    previewImage: {
-      width: '100%',
-      height: 'auto',
-      borderRadius: '10px',
-    },
-    input: {
-      display: 'block',
-      margin: '20px auto',
-    },
-    button: {
-      backgroundColor: '#4CAF50',
-      color: 'white',
-      border: 'none',
-      padding: '10px 20px',
-      borderRadius: '5px',
-      cursor: 'pointer',
-      fontSize: '16px',
-      marginTop: '10px',
-    },
-    message: {
-      fontSize: '16px',
-      color: '#333',
-      marginTop: '20px',
-    },
-    classificationResult: {
-      fontSize: '18px',
-      color: '#4CAF50',
-      marginTop: '20px',
-    },
-    loading: {
-      fontSize: '18px',
-      color: '#FF5733',
-      marginTop: '20px',
-    },
+    );
   };
 
   return (
-    <div style={styles.services}>
-      <h1 style={styles.heading}>Classify an Image</h1>
-      <div style={styles.uploadBox}>
-        {previewImage ? (
-          <img src={previewImage} alt="Preview" style={styles.previewImage} />
-        ) : (
-          <div style={styles.placeholder}>
-            <p>Select an image</p>
+    <div className="services-container">
+      {/* Card 1 - Diagnose Plant */}
+      <div className="card">
+        <div className="content">
+          <h2>Diagnose Your Plant</h2>
+          <p>Upload an image of your plant to diagnose potential diseases.</p>
+          <div className="upload-box">
+            {previewImage ? (
+              <img src={previewImage} alt="Preview" className="preview-image" />
+            ) : (
+              <div className="placeholder">Select an image</div>
+            )}
+            <input type="file" accept="image/*" onChange={handleImageChange} />
+            <button onClick={handleUpload}>Upload and Classify</button>
           </div>
-        )}
-        <input type="file" accept="image/*" onChange={handleImageChange} style={styles.input} />
-        <button onClick={handleUpload} style={styles.button}>Upload Image</button>
+          {isLoading && <p>Classifying image...</p>}
+          <p>{message}</p>
+          <div>{renderClassificationResults()}</div>
+        </div>
       </div>
-      <p style={styles.message}>{message}</p>
 
-      {/* Loading Spinner or Message */}
-      {isLoading && <p style={styles.loading}>Classifying image...</p>}
+      {/* Card 2 - Search Diseases */}
+      <div className="card">
+        <div className="content">
+          <h2>Search for Plant Diseases</h2>
+          <p>Search for a plant disease to get a summary from Wikipedia.</p>
+          <input
+            type="text"
+            placeholder="Enter disease name"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button onClick={handleSearch}>Search</button>
 
-      {/* Display the classification result */}
-      <div>{renderClassificationResults()}</div>
+          {searchLoading && <p>Loading...</p>}
+          {searchResult && <div className="search-result">{searchResult}</div>}
+        </div>
+      </div>
     </div>
   );
 };

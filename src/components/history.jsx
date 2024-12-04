@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const History = () => {
-  const [history, setHistory] = useState(null);  // Change to null instead of an empty object
+  const [history, setHistory] = useState([]);  // Changed from null to an empty array
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -18,14 +18,23 @@ const History = () => {
           setLoading(false);
           return;
         }
+
         // Add a timestamp to prevent caching
         const response = await axios.post('/api/history', {}, {
           headers: {
             'Authorization': `${username}` // Send the username in the header
           }
         });
-        console.log('Response data:', response.data);  // Add this line to log the response data
-        setHistory(response.data);
+
+        console.log('Response data:', response.data);  // Log the response data here
+        
+        // Ensure response.data is an array before setting it
+        if (Array.isArray(response.data)) {
+          setHistory(response.data);  // Set history only if it is an array
+        } else {
+          console.log('Data is not an array', response.data);  // Log if the response is not an array
+          setHistory([]);  // Default to an empty array if data is not as expected
+        }
       } catch (err) {
         setError(err.response?.data?.message || 'Error fetching history.');
       } finally {
@@ -70,6 +79,9 @@ const History = () => {
     },
   };
 
+  // Log current history state for debugging
+  console.log('History State:', history);
+
   // Render logic
   if (loading) {
     return <div>Loading...</div>;
@@ -79,7 +91,8 @@ const History = () => {
     return <div style={styles.error}>{error}</div>;
   }
 
-  if (!history) {
+  // Check if history is an array and has data
+  if (!Array.isArray(history) || history.length === 0) {
     return <div>No history found.</div>;
   }
 
@@ -87,16 +100,18 @@ const History = () => {
     <div style={styles.container}>
       <h1>Your Upload History</h1>
       <ul style={styles.list}>
-        <li key={history._id} style={styles.item}>
-          <div>
-            <img src={history.url} alt="Uploaded" style={styles.image} />
-          </div>
-          <div>
-            <p><strong>Diagnosis:</strong> {history.diagnosis}</p>
-            <p><strong>Accuracy:</strong> {history.accuracy}%</p>
-            <p><strong>Uploaded At:</strong> {new Date(history.uploadedAt).toLocaleString()}</p>
-          </div>
-        </li>
+        {history.map(item => (  // Map through the history array
+          <li key={item._id} style={styles.item}>
+            <div>
+              <img src={item.url} alt="Uploaded" style={styles.image} />
+            </div>
+            <div>
+              <p><strong>Diagnosis:</strong> {item.diagnosis}</p>
+              <p><strong>Accuracy:</strong> {item.accuracy}%</p>
+              <p><strong>Uploaded At:</strong> {new Date(item.uploadedAt).toLocaleString()}</p>
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   );
