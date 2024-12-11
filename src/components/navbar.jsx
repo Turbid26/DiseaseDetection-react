@@ -33,6 +33,7 @@ const Navbar = () => {
       transform: 'translateX(-50%)',
       backgroundColor: 'cornflowerblue',
       zIndex: 1,
+      height: '60px',
       width: 'auto',
       padding: '10px',
       borderRadius: '10px',
@@ -84,6 +85,7 @@ const Navbar = () => {
         <li style={styles.li}><Link to="/history">History</Link></li>
         <li style={styles.li}><Link to="/blog">Community</Link></li>
         <li style={styles.li}><Link to="/contact">Contact</Link></li>
+        <li style={styles.li}><Link to="/FAQ">FAQ</Link></li>
         
         {isLoggedIn ? (
           <li

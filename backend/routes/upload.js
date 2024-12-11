@@ -65,13 +65,26 @@ router.post('/classify', async (req, res) => {
       return res.status(400).json({ error: 'Username and image URL are required' });
     }
 
+    // const leafCheckResponse = await fetch(
+    //   "https://api-inference.huggingface.co/models/google/vit-base-patch16-224",
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer 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`,
+    //       },
+    //       method: "POST",
+		// 	    body: imageUrl,
+    //   }
+    // );
+
+    // console.log(leafCheckResponse);
+
     // Call Hugging Face API for classification
     const response = await axios.post(
       "https://api-inference.huggingface.co/models/ozair23/mobilenet_v2_1.0_224-finetuned-plantdisease", 
       { inputs: imageUrl },
       {
         headers: {
-          Authorization: `Bearer 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`, // Your Hugging Face token
+          Authorization: "Bearer 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", // Your Hugging Face token
         },
       }
     );

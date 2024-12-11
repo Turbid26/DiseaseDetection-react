@@ -1,17 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const Upload = require('../models/upload'); // Import the Upload model
-const users = require('../models/users');
+const Upload = require('../models/upload');
 
-//
-// Get upload history for the logged-in user
+// Fetch history for the logged-in user
 router.post('/', async (req, res) => {
-
   try {
     const username = req.headers['authorization'];
 
     if (!username) {
-      return res.status(400).json({ msg: 'please log in to view history' });
+      return res.status(401).json({ message: 'Unauthorized access. Please log in.' });
     }
 
     const uploads = await Upload.find({ username }).sort({ uploadedAt: -1 });
@@ -20,12 +17,10 @@ router.post('/', async (req, res) => {
       return res.status(404).json({ message: 'No uploads found for this user.' });
     }
 
-    // Respond with the uploads
     res.status(200).json(uploads);
-  }
-   catch (error) {
-    console.error('Error fetching upload history:', error);
-    res.status(500).json({ message: 'Error retrieving upload history.' });
+  } catch (error) {
+    console.error('Error fetching user history:', error);
+    res.status(500).json({ message: 'Internal server error while retrieving history.' });
   }
 });
 
