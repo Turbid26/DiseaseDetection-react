@@ -8,7 +8,7 @@ const Navbar = () => {
   const { isLoggedIn, logout } = useAuth();
   const [username, setUsername] = useState('');
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen/*, setMobileMenuOpen*/] = useState(false);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');

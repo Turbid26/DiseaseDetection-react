@@ -10,7 +10,7 @@ const Blog = () => {
 
   // Fetch blog posts from the backend
   useEffect(() => {
-    fetch('api/blog')
+    fetch('/api/blog')
       .then(response => response.json())
       .then(data => {
         setBlogs(data);
