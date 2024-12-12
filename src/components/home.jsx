@@ -9,8 +9,6 @@ import img from '../assets/c89e77-iStock-1364679535.jpg';
 import green from '../assets/green-energy.webp';
 import logo from '../assets/logo-nobg.png';
 
-
-
 const Home = () => {
   // Function to create a leaf element and add to the DOM
   const createLeaf = () => {
@@ -71,7 +69,7 @@ const Home = () => {
           </div>
           <img 
             src={logo} 
-            style={{ width: '500px', marginLeft: '20px' }} 
+            style={{ width: '500px', marginLeft: '0px' }} 
             alt="Effortless Crop Care" 
           />
         </header>

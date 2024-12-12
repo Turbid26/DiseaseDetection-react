@@ -1,30 +1,24 @@
-// backend/routes/uploadAndSave.js
+require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const cloudinary = require('../cloudinaryConfig');
 const multer = require('multer');
 const Upload = require('../models/upload');
 const axios = require('axios');
+const { identifyPlant } = require('../plantnet'); 
 
 // Configure multer
 const storage = multer.memoryStorage();
 const uploadMiddleware = multer({ storage: storage });
 
-// Global variables to hold data temporarily
-let username = '';
-let imageUrl = '';
-let diagnosis = '';
-let accuracy = 0;
-
-// Route for image upload and classification
+// Route for image upload and leaf detection
 router.post('/', uploadMiddleware.single('image'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded.' });
     }
 
-    // Get user details from the request body
-    username = req.body.username;  // Store username globally
+    const username = req.body.username?.trim();
     if (!username) {
       return res.status(400).json({ error: 'Username is required.' });
     }
@@ -43,87 +37,63 @@ router.post('/', uploadMiddleware.single('image'), async (req, res) => {
       ).end(req.file.buffer);
     });
 
-    // Save the image URL globally
-    imageUrl = result.secure_url;
+    const imageUrl = result.secure_url;
 
-    res.status(201).json({
-      message: 'Image uploaded successfully.',
-      upload: {
-        url: imageUrl,
-        username: username,
-      },
-    });
+    const leafres = await identifyPlant(imageUrl);
+    console.log(leafres);
+    
+    
+
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error.response?.data || 'Internal Server Error' });
   }
 });
 
+// Route for classification
 router.post('/classify', async (req, res) => {
   try {
+    const { username, imageUrl } = req.body;
     if (!username || !imageUrl) {
       return res.status(400).json({ error: 'Username and image URL are required' });
     }
 
-    // const leafCheckResponse = await fetch(
-    //   "https://api-inference.huggingface.co/models/google/vit-base-patch16-224",
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer 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`,
-    //       },
-    //       method: "POST",
-		// 	    body: imageUrl,
-    //   }
-    // );
-
-    // console.log(leafCheckResponse);
-
-    // Call Hugging Face API for classification
     const response = await axios.post(
-      "https://api-inference.huggingface.co/models/ozair23/mobilenet_v2_1.0_224-finetuned-plantdisease", 
+      'https://api-inference.huggingface.co/models/ozair23/mobilenet_v2_1.0_224-finetuned-plantdisease',
       { inputs: imageUrl },
       {
         headers: {
-          Authorization: "Bearer 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", // Your Hugging Face token
+          Authorization: `Bearer ${process.env.HF_API_KEY}`, // Use API key from environment
         },
       }
     );
 
-    // Assuming Hugging Face returns results in this format: [{ label: "Disease name", score: 0.85 }]
     const classificationResults = response.data;
 
     if (classificationResults && Array.isArray(classificationResults) && classificationResults.length > 0) {
-      diagnosis = classificationResults[0].label; // Take the first label
-      accuracy = classificationResults[0].score * 100; // Accuracy percentage
+      const diagnosis = classificationResults[0].label;
+      const accuracy = classificationResults[0].score * 100;
 
-      // Save diagnosis, accuracy, and image URL into the database
       const newUpload = new Upload({
         url: imageUrl,
-        username: username,
-        diagnosis: diagnosis,
-        accuracy: accuracy,
+        username,
+        diagnosis,
+        accuracy,
       });
 
       await newUpload.save();
 
-      // Send a response with the diagnosis and accuracy
       res.status(200).json({
         message: 'Image classified and saved successfully',
-        diagnosis: diagnosis,
-        accuracy: accuracy,
+        diagnosis,
+        accuracy,
       });
     } else {
       res.status(400).json({ error: 'No classification results returned' });
     }
-
-    username = '';
-    imageUrl = '';
-    diagnosis = '';
-    accuracy = 0;
-
   } catch (error) {
     console.error('Error classifying image:', error);
-    res.status(500).json({ error: 'Error classifying image' });
+    res.status(500).json({ error: error.response?.data || 'Error classifying image' });
   }
 });
 

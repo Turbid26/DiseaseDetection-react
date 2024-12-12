@@ -132,7 +132,7 @@ export default function Feedback() {
             <div>
               <button
                 type="submit"
-                className="w-full bg-yellow-500 text-white py-2 px-4 rounded-md hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50"
+                className="w-full bg-gray-800 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50"
               >
                 Submit Feedback
               </button>

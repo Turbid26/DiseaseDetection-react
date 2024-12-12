@@ -17,7 +17,6 @@ function App() {
   return (
     <AuthProvider>
     <Router>
-    <div>
       <Routes>
         <Route path="/" element={<Login />} /> {/* No Navbar here */}
         <Route path="/home" element={<><Navbar /><Home /></>} /> {/* Navbar included */}
@@ -30,7 +29,6 @@ function App() {
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />
       </Routes>
-    </div>
     </Router>
     </AuthProvider>
   );
