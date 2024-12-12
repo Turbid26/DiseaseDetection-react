@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import logo from "../assets/logo-nobg.png";
+import user from "../assets/user.jpg";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
   const [username, setUsername] = useState('');
   const [isDropdownVisible, setDropdownVisible] = useState(false);
-  const [isMobileMenuOpen/*, setMobileMenuOpen*/] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
@@ -37,7 +38,7 @@ const Navbar = () => {
               <img
                 className="h-8 w-auto"
                 src={logo}
-                style={{width:'120px', height:'100px'}}
+                style={{ width: '83px', height: '60px' }}
                 alt="Your Company"
               />
             </div>
@@ -49,18 +50,25 @@ const Navbar = () => {
               >
                 Home
               </Link>
-              <Link
-                to="/services"
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              >
-                Services
-              </Link>
-              <Link
-                to="/history"
-                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              >
-                History
-              </Link>
+
+              {/* Conditionally render 'Services' and 'History' only if the user is logged in */}
+              {isLoggedIn && (
+                <>
+                  <Link
+                    to="/services"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    Services
+                  </Link>
+                  <Link
+                    to="/history"
+                    className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    History
+                  </Link>
+                </>
+              )}
+
               <Link
                 to="/blog"
                 className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
@@ -90,7 +98,7 @@ const Navbar = () => {
                   >
                     <img
                       className="h-8 w-8 rounded-full"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      src={user}
                       alt="User Profile"
                     />
                   </button>
@@ -126,18 +134,25 @@ const Navbar = () => {
               >
                 Home
               </Link>
-              <Link
-                to="/services"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              >
-                Services
-              </Link>
-              <Link
-                to="/history"
-                className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
-              >
-                History
-              </Link>
+
+              {/* Conditionally render 'Services' and 'History' only if the user is logged in */}
+              {isLoggedIn && (
+                <>
+                  <Link
+                    to="/services"
+                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    Services
+                  </Link>
+                  <Link
+                    to="/history"
+                    className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    History
+                  </Link>
+                </>
+              )}
+
               <Link
                 to="/blog"
                 className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"

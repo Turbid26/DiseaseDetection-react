@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useAuth } from '../context/AuthContext';  // Import useAuth to handle global login state
+import { useAuth } from '../context/AuthContext'; // Import useAuth to handle global login state
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login: authLogin } = useAuth();  // Destructure login from useAuth context to update login status
+  const { login: authLogin } = useAuth(); // Destructure login from useAuth context to update login status
   const [isRegistering, setIsRegistering] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
@@ -18,26 +18,8 @@ const Login = () => {
 
   const { email, firstName, lastName, username, password, confirmPassword } = formData;
 
-  useEffect(() => {
-    const styleSheet = document.styleSheets[0];
-    const keyframes = `
-      @keyframes pulse {
-        0% {
-          transform: translate(-50%, -50%) scale(1);
-        }
-        50% {
-          transform: translate(-50%, -50%) scale(1.1);
-        }
-        100% {
-          transform: translate(-50%, -50%) scale(1);
-        }
-      }
-    `;
-    styleSheet.insertRule(keyframes, styleSheet.cssRules.length);
-  }, []);
-//
   const handleGuestLogin = () => {
-    navigate('/home');
+    navigate('/home'); // Navigate to the home page as a guest
   };
 
   const handleForgotPassword = () => {
@@ -47,7 +29,7 @@ const Login = () => {
   const toggleForm = () => {
     setIsRegistering(!isRegistering);
   };
-//
+
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -58,27 +40,27 @@ const Login = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     if (email.length === 0) {
-      alert('email is empty');
+      alert('Email is empty');
       return;
     }
     if (firstName.length === 0) {
-      alert('first name is empty');
+      alert('First name is empty');
       return;
     }
     if (lastName.length === 0) {
-      alert('last name is empty');
+      alert('Last name is empty');
       return;
     }
     if (username.length === 0) {
-      alert('username is empty');
+      alert('Username is empty');
       return;
     }
     if (password.length === 0) {
-      alert('password is empty');
+      alert('Password is empty');
       return;
     }
     if (confirmPassword.length === 0) {
-      alert('confirm password is empty');
+      alert('Confirm password is empty');
       return;
     }
     if (password !== confirmPassword) {
@@ -107,10 +89,8 @@ const Login = () => {
     try {
       const res = await axios.post('./api/auth/login', { username, password });
       localStorage.setItem('username', username);
-      // Call the login function from useAuth to update the global login state
-      authLogin();  
+      authLogin();  // Call the login function from useAuth to update the global login state
       alert(res.data.msg);
-      // Redirect the user to the home page after successful login
       navigate('/home');
     } catch (err) {
       console.error(err.response.data.msg);
@@ -118,191 +98,145 @@ const Login = () => {
     }
   };
 
-  const styles = {
-    body: {
-      backgroundImage: `url(${require('../assets/login-background.jpg')})`,
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: 'cover',
-      backgroundPosition: 'center',
-      backgroundAttachment: 'fixed',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      minHeight: '100vh',
-    },
-    continueGuest: {
-      position: 'absolute',
-      top: '20px',
-      right: '20px',
-      backgroundColor: 'rgba(89, 168, 89, 0.8)',
-      color: 'white',
-      border: 'none',
-      borderRadius: '20px',
-      padding: '10px 20px',
-      cursor: 'pointer',
-      fontSize: '16px',
-      boxShadow: '0 0 10px rgba(0, 0, 0, 0.3)',
-      zIndex: 10,
-    },
-    login: {
-      position: 'relative',
-      margin: 'auto',
-      height: isRegistering ? '600px' : '400px',
-      width: '300px',
-      borderRadius: '30px',
-      backgroundColor: '#ffffff',
-      padding: '20px',
-      zIndex: 5,
-      boxShadow: '0 0 20px rgba(0, 0, 0, 0.2)',
-      transition: 'height 0.5s ease-in-out',
-    },
-    pulseCircle: {
-      content: "''",
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      width: isRegistering ? '600px' : '500px',
-      height: isRegistering ? '600px' : '500px',
-      backgroundColor: isRegistering ? 'rgba(171, 97, 97, 0.5)' : 'rgba(89, 168, 89, 0.5)',
-      borderRadius: '50%',
-      transform: 'translate(-50%, -50%)',
-      zIndex: -1,
-      animation: 'pulse 2s infinite',
-    },
-    h1: {
-      textAlign: 'center',
-      color: '#333',
-      zIndex: 2,
-    },
-    inputBox: {
-      height: '50px',
-      width: '100%',
-      margin: isRegistering ? '15px 0' : '30px 0',
-      position: 'relative',
-      zIndex: 5,
-    },
-    input: {
-      width: '90%',
-      height: '100%',
-      background: 'transparent',
-      border: '2px solid #ccc',
-      borderRadius: '40px',
-      padding: '0 10px',
-      outline: 'none',
-      fontSize: '16px',
-      zIndex: 2,
-    },
-    icon: {
-      position: 'absolute',
-      right: '10px',
-      top: '12px',
-      color: '#aaa',
-      zIndex: 2,
-    },
-    remember: {
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginTop: '10px',
-      zIndex: 5,
-    },
-    forgetPasswordButton: {
-      padding: '10px 20px',
-      justifyContent: 'center',
-      border: 'none',
-      borderRadius: '20px',
-      backgroundColor: 'rgba(89, 168, 89, 0.8)',
-      color: 'white',
-      cursor: 'pointer',
-      zIndex: 2,
-    },
-    create: {
-      textAlign: 'center',
-      marginTop: '20px',
-      zIndex: 5,
-    },
-    createButton: {
-      textDecoration: 'none',
-      position: 'relative',
-      justifyContent: 'center',
-      color: 'rgba(38, 38, 255, 0.8)',
-      fontWeight: 'bold',
-      cursor: 'pointer',
-      zIndex: 10,
-    },
-    emptyButton: {
-      background: 'none',
-      border: 'none',
-      color: '#1a71c9',
-      fontSize: '14px',
-      cursor: 'pointer',
-      padding: 0,
-      marginLeft: '10px',
-      textDecoration: 'none',
-      zIndex: 2,
-    },
-  };
-
   return (
-    <div style={styles.body}>
-      <button style={styles.continueGuest} onClick={handleGuestLogin}>Continue as Guest</button>
-      <div style={styles.login}>
-        <div style={styles.pulseCircle}></div>
-        <h1 style={styles.h1}>{isRegistering ? 'Register' : 'Login'}</h1>
-        <form onSubmit={isRegistering ? handleRegister : handleLogin}>
-          {isRegistering && (
-            <>
-              <div style={styles.inputBox}>
-                <input type="text" name="email" placeholder="Email" value={email} onChange={handleChange} style={styles.input} />
-                <i className='bx bx-envelope' style={styles.icon}></i>
-              </div>
-              <div style={styles.inputBox}>
-                <input type="text" name="firstName" placeholder="First Name" value={firstName} onChange={handleChange} style={styles.input} />
-                <i className='bx bx-user' style={styles.icon}></i>
-              </div>
-              <div style={styles.inputBox}>
-                <input type="text" name="lastName" placeholder="Last Name" value={lastName} onChange={handleChange} style={styles.input} />
-                <i className='bx bx-user' style={styles.icon}></i>
-              </div>
-            </>
-          )}
-          <div style={styles.inputBox}>
-            <input type="text" name="username" placeholder="Username" value={username} onChange={handleChange} style={styles.input} />
-            <i className='bx bx-user' style={styles.icon}></i>
-          </div>
-          <div style={styles.inputBox}>
-            <input type="password" name="password" placeholder="Password" value={password} onChange={handleChange} style={styles.input} />
-            <i className='bx bx-lock-alt' style={styles.icon}></i>
-          </div>
-          {isRegistering && (
-            <div style={styles.inputBox}>
-              <input type="password" name="confirmPassword" placeholder="Confirm Password" value={confirmPassword} onChange={handleChange} style={styles.input} />
-              <i className='bx bx-lock-alt' style={styles.icon}></i>
-            </div>
-          )}
-          <div style={styles.remember}>
-            {!isRegistering && (
+    <div className="flex min-h-screen">
+      {/* Left side (Image) */}
+      <div className="w-1/2 bg-cover bg-center bg-fixed" style={{ backgroundImage: `url(${require('../assets/login-background.jpg')})` }}>
+        {/* You can add any overlay or content in this section if necessary */}
+      </div>
+
+      {/* Right side (Login Form) */}
+      <div className="w-1/2 bg-black bg-opacity-75 p-8 flex justify-center items-center">
+        <div className="w-full max-w-md">
+          <h1 className="text-white text-2xl text-center mb-6">{isRegistering ? 'Register' : 'Login'}</h1>
+          <form onSubmit={isRegistering ? handleRegister : handleLogin}>
+            {isRegistering && (
               <>
-                <label>
-                  <input type="checkbox" /> Remember me
-                </label>
-                <button onClick={handleForgotPassword} type="button" style={styles.emptyButton} >Forgot Password?</button>
+                <div className="mb-4">
+                  <input 
+                    type="text" 
+                    name="email" 
+                    placeholder="Email" 
+                    value={email} 
+                    onChange={handleChange} 
+                    className="w-full p-3 bg-transparent border-2 border-gray-400 rounded-xl text-white focus:outline-none" 
+                  />
+                </div>
+                <div className="mb-4">
+                  <input 
+                    type="text" 
+                    name="firstName" 
+                    placeholder="First Name" 
+                    value={firstName} 
+                    onChange={handleChange} 
+                    className="w-full p-3 bg-transparent border-2 border-gray-400 rounded-xl text-white focus:outline-none" 
+                  />
+                </div>
+                <div className="mb-4">
+                  <input 
+                    type="text" 
+                    name="lastName" 
+                    placeholder="Last Name" 
+                    value={lastName} 
+                    onChange={handleChange} 
+                    className="w-full p-3 bg-transparent border-2 border-gray-400 rounded-xl text-white focus:outline-none" 
+                  />
+                </div>
               </>
             )}
+
+            <div className="mb-4">
+              <input 
+                type="text" 
+                name="username" 
+                placeholder="Username" 
+                value={username} 
+                onChange={handleChange} 
+                className="w-full p-3 bg-transparent border-2 border-gray-400 rounded-xl text-white focus:outline-none" 
+              />
+            </div>
+            
+            <div className="mb-4">
+              <input 
+                type="password" 
+                name="password" 
+                placeholder="Password" 
+                value={password} 
+                onChange={handleChange} 
+                className="w-full p-3 bg-transparent border-2 border-gray-400 rounded-xl text-white focus:outline-none" 
+              />
+            </div>
+            
+            {isRegistering && (
+              <div className="mb-6">
+                <input 
+                  type="password" 
+                  name="confirmPassword" 
+                  placeholder="Confirm Password" 
+                  value={confirmPassword} 
+                  onChange={handleChange} 
+                  className="w-full p-3 bg-transparent border-2 border-gray-400 rounded-xl text-white focus:outline-none" 
+                />
+              </div>
+            )}
+
+            <div className="flex justify-between items-center mb-6">
+              {!isRegistering && (
+                <>
+                  <label className="text-white">
+                    <input type="checkbox" className="mr-2" /> Remember me
+                  </label>
+                  <button 
+                    onClick={handleForgotPassword} 
+                    type="button" 
+                    className="text-blue-500 text-sm">
+                    Forgot Password?
+                  </button>
+                </>
+              )}
+            </div>
+
+            <button 
+              type="submit" 
+              className="w-full py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 focus:outline-none">
+              {isRegistering ? 'Register' : 'Login'}
+            </button>
+          </form>
+
+          {/* Continue as Guest Button */}
+          <div className="text-center mt-4">
+            <button 
+              onClick={handleGuestLogin} 
+              className="w-full py-3 mt-4 bg-gray-600 text-white rounded-xl hover:bg-gray-700 focus:outline-none">
+              Continue as Guest
+            </button>
           </div>
-          <button type="submit" style={styles.forgetPasswordButton}>
-            {isRegistering ? 'Register' : 'Login'}
-          </button>
-        </form>
-        <div style={styles.create}>
-          <span>{isRegistering ? 'Already have an account?' : "Don't have an account?"}</span>
-          <button onClick={toggleForm} style={styles.createButton}>
-            {isRegistering ? 'Login' : 'Create Account'}
-          </button>
+
+          <div className="text-center mt-4">
+            {!isRegistering ? (
+              <p className="text-white">
+                Don't have an account?{' '}
+                <button 
+                  onClick={toggleForm} 
+                  className="text-blue-500 font-semibold">
+                  Create one
+                </button>
+              </p>
+            ) : (
+              <p className="text-white">
+                Already have an account?{' '}
+                <button 
+                  onClick={toggleForm} 
+                  className="text-blue-500 font-semibold">
+                  Login
+                </button>
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>
   );
 };
-//test
+
 export default Login;
