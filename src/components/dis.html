@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plant Disease Treatment Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .results {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e9f7e9;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Plant Disease Treatment Finder</h1>
+        <label for="disease">Enter Plant Disease Name:</label>
+        <input type="text" id="disease" placeholder="E.g., Powdery Mildew">
+        <button onclick="getTreatment()">Find Treatment</button>
+
+        <div id="results" class="results"></div>
+    </div>
+
+    <script>
+        async function getTreatment() {
+            const disease = document.getElementById("disease").value.trim();
+            const resultsDiv = document.getElementById("results");
+
+            if (!disease) {
+                resultsDiv.innerHTML = "<p>Please enter a plant disease name.</p>";
+                return;
+            }
+
+            // Clear any previous results
+            resultsDiv.innerHTML = "<p>Loading...</p>";
+
+            try {
+                // Fetch treatment data from an API
+                const response = await fetch(`https://api.plantdiseaseapi.com/v1/diseases?search=${disease}`);
+                const data = await response.json();
+
+                if (data && data.length > 0) {
+                    let treatmentInfo = `<h3>Treatment Methods for ${disease}:</h3>`;
+                    data.forEach(diseaseInfo => {
+                        treatmentInfo += `
+                            <h4>${diseaseInfo.name}</h4>
+                            <p><strong>Description:</strong> ${diseaseInfo.description}</p>
+                            <p><strong>Treatment:</strong> ${diseaseInfo.treatment}</p>
+                        `;
+                    });
+                    resultsDiv.innerHTML = treatmentInfo;
+                } else {
+                    resultsDiv.innerHTML = `<p>No treatment information found for "${disease}". Please check the name or try a different disease.</p>`;
+                }
+            } catch (error) {
+                console.error(error);
+                resultsDiv.innerHTML = "<p>Sorry, there was an error fetching treatment information. Please try again later.</p>";
+            }
+        }
+    </script>
+</body>
+</html>
