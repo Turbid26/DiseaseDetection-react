@@ -8,10 +8,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { isLoggedIn, logout } = useAuth();
   const [username, setUsername] = useState('');
-  username = '';
   const [isDropdownVisible, setDropdownVisible] = useState(false);
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  setMobileMenuOpen(false);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
@@ -106,6 +104,9 @@ const Navbar = () => {
                   </button>
                   {isDropdownVisible && (
                     <div className="absolute right-0 z-10 mt-2 w-48 bg-white rounded-md shadow-lg">
+                      <div className="px-4 py-2 text-sm text-gray-700">
+                        Welcome, {username} {/* Display username */}
+                      </div>
                       <button
                         onClick={handleLogout}
                         className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"

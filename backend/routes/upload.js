@@ -5,7 +5,7 @@ const cloudinary = require('../cloudinaryConfig');
 const multer = require('multer');
 const Upload = require('../models/upload');
 const axios = require('axios');
-const { identifyPlant } = require('./plantNet'); 
+const { identifyPlant } = require('../plantnet'); 
 
 // Configure multer
 const storage = multer.memoryStorage();
@@ -39,9 +39,9 @@ router.post('/', uploadMiddleware.single('image'), async (req, res) => {
 
     const imageUrl = result.secure_url;
 
-    const leafres = await identifyPlant(imageURL);
+    const leafres = await identifyPlant(imageUrl);
     console.log(leafres);
-
+    
     
 
   } catch (error) {
