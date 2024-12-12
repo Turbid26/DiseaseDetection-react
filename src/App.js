@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './components/navbar';
 import Login from './components/login';
+import BlogDetail from './components/BlogDetail';
 import Home from './components/home';
 import Feedback from './components/contact.tsx';
 import Diagnose from './components/services.tsx';
@@ -24,6 +25,7 @@ function App() {
         <Route path="/services" element={<><Navbar /><Diagnose /></>} /> {/* Navbar included */}
         <Route path="/history" element={<><Navbar /><History /></>} /> {/* Navbar included */}
         <Route path="/blog" element={<><Navbar /><Blog /></>} /> {/* Navbar included */}
+        <Route path="/blog/:blogId" element={<BlogDetail />} />
         <Route path="/FAQ" element={<><Navbar /><FAQ /></>} /> {/* Navbar included */}
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />

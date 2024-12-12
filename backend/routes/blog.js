@@ -14,6 +14,7 @@ router.post('/', async (req, res) => {
     const newBlog = new Blog({
       title,
       content,
+      comments: [], // Ensure an empty array for comments is initialized
     });
 
     const savedBlog = await newBlog.save();
@@ -24,14 +25,31 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Get all blog posts
+// Get all blog posts (returns only essential information for listing)
 router.get('/', async (req, res) => {
   try {
-    const blogs = await Blog.find();
+    const blogs = await Blog.find({}, 'title content createdAt'); // Fetch specific fields only
     res.json(blogs);
   } catch (error) {
     console.error('Error fetching blogs:', error);
     res.status(500).json({ message: 'Error fetching blogs' });
+  }
+});
+
+// Get details of a single blog post, including comments
+router.get('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const blog = await Blog.findById(id);
+    if (!blog) {
+      return res.status(404).json({ message: 'Blog post not found' });
+    }
+
+    res.json(blog);
+  } catch (error) {
+    console.error('Error fetching blog details:', error);
+    res.status(500).json({ message: 'Error fetching blog details' });
   }
 });
 
@@ -53,7 +71,7 @@ router.post('/:id/comment', async (req, res) => {
     blog.comments.push({ username, comment });
     await blog.save();
 
-    res.status(200).json(blog);
+    res.status(200).json({ comments: blog.comments }); // Only return updated comments
   } catch (error) {
     console.error('Error adding comment:', error);
     res.status(500).json({ message: 'Error adding comment' });
