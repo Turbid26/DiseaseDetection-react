@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import logo from "../assets/logo-nobg.png";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -35,7 +36,8 @@ const Navbar = () => {
               {/* Logo */}
               <img
                 className="h-8 w-auto"
-                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
+                src={logo}
+                style={{width:'120px', height:'100px'}}
                 alt="Your Company"
               />
             </div>

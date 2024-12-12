@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 type FeedbackForm = {
   full_name: string;
@@ -27,6 +28,10 @@ export default function Feedback() {
     e.preventDefault();
     try {
       // Handle form submission (e.g., send to API)
+      const uploadResponse = await axios.post('/api/contact', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
+
       console.log('Feedback submitted:', formData);
       // Show success message or redirect
     } catch (error) {
