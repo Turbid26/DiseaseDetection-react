@@ -7,6 +7,7 @@ const Navbar = () => {
   const { isLoggedIn, logout } = useAuth();
   const [username, setUsername] = useState('');
   const [isDropdownVisible, setDropdownVisible] = useState(false);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const storedUsername = localStorage.getItem('username');
@@ -25,94 +26,139 @@ const Navbar = () => {
     navigate('/'); // Redirect to login page or homepage after logout
   };
 
-  const styles = {
-    navigation: {
-      position: 'fixed',
-      top: '20px',
-      left: '50%',
-      transform: 'translateX(-50%)',
-      backgroundColor: 'cornflowerblue',
-      zIndex: 1,
-      height: '60px',
-      width: 'auto',
-      padding: '10px',
-      borderRadius: '10px',
-    },
-    ul: {
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      gap: '20px', // Spacing between menu items
-      margin: 0,
-      padding: 0,
-      listStyleType: 'none', // Remove default list styling
-    },
-    li: {
-      padding: '10px 20px',
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      position: 'relative', // Position relative to control dropdown placement
-    },
-    icon: {
-      marginRight: '5px', // Space between icon and label
-    },
-    dropdown: {
-      position: 'absolute',
-      top: '100%',
-      right: 0,
-      backgroundColor: 'white',
-      boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-      borderRadius: '5px',
-      display: isDropdownVisible ? 'block' : 'none',
-      zIndex: 10,
-    },
-    dropdownItem: {
-      padding: '10px 20px',
-      cursor: 'pointer',
-      borderBottom: '1px solid #ddd',
-    },
-    dropdownItemLast: {
-      borderBottom: 'none',
-    },
-  };
-
   return (
-    <nav style={styles.navigation}>
-      <ul style={styles.ul}>
-        <li style={styles.li}><Link to="/home">Home</Link></li>
-        <li style={styles.li}><Link to="/services">Services</Link></li>
-        <li style={styles.li}><Link to="/history">History</Link></li>
-        <li style={styles.li}><Link to="/blog">Community</Link></li>
-        <li style={styles.li}><Link to="/contact">Contact</Link></li>
-        <li style={styles.li}><Link to="/FAQ">FAQ</Link></li>
-        
-        {isLoggedIn ? (
-          <li
-            style={styles.li}
-            onMouseEnter={() => setDropdownVisible(true)}
-            onMouseLeave={() => setDropdownVisible(false)}
-          >
-            <i className='bx bx-user' style={styles.icon}></i>
-            <span>{username}</span>
-            <div className="dropdown" style={styles.dropdown}>
-              <div
-                className="dropdownItem"
-                style={styles.dropdownItem}
-                onClick={handleLogout}
-              >
-                Logout
-              </div>
+    <div>
+      <nav className="bg-gray-800">
+        <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between">
+            <div className="flex items-center">
+              {/* Logo */}
+              <img
+                className="h-8 w-auto"
+                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
+                alt="Your Company"
+              />
             </div>
-          </li>
-        ) : (
-          <li style={styles.li} onClick={handleLoginRedirect}>
-            <i className='bx bx-user' style={styles.icon}></i>
-            <label htmlFor="bx-user" style={{ cursor: 'pointer' }}>Login</label>
-          </li>
+            <div className="hidden sm:flex sm:space-x-4">
+              {/* Desktop Navigation */}
+              <Link
+                to="/home"
+                className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white"
+              >
+                Home
+              </Link>
+              <Link
+                to="/services"
+                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                Services
+              </Link>
+              <Link
+                to="/history"
+                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                History
+              </Link>
+              <Link
+                to="/blog"
+                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                Community
+              </Link>
+              <Link
+                to="/contact"
+                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                Contact
+              </Link>
+              <Link
+                to="/FAQ"
+                className="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                FAQ
+              </Link>
+            </div>
+            <div className="flex items-center space-x-4">
+              {/* Login/Logout and Profile */}
+              {isLoggedIn ? (
+                <div className="relative">
+                  <button
+                    className="flex items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    onClick={() => setDropdownVisible(!isDropdownVisible)}
+                  >
+                    <img
+                      className="h-8 w-8 rounded-full"
+                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      alt="User Profile"
+                    />
+                  </button>
+                  {isDropdownVisible && (
+                    <div className="absolute right-0 z-10 mt-2 w-48 bg-white rounded-md shadow-lg">
+                      <button
+                        onClick={handleLogout}
+                        className="block w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <button
+                  onClick={handleLoginRedirect}
+                  className="rounded-md bg-gray-900 px-3 py-2 text-sm font-medium text-white hover:bg-gray-700"
+                >
+                  Login
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="sm:hidden">
+            <div className="space-y-1 px-2 pb-3 pt-2">
+              <Link
+                to="/home"
+                className="block rounded-md bg-gray-900 px-3 py-2 text-base font-medium text-white"
+              >
+                Home
+              </Link>
+              <Link
+                to="/services"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                Services
+              </Link>
+              <Link
+                to="/history"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                History
+              </Link>
+              <Link
+                to="/blog"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                Community
+              </Link>
+              <Link
+                to="/contact"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                Contact
+              </Link>
+              <Link
+                to="/FAQ"
+                className="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                FAQ
+              </Link>
+            </div>
+          </div>
         )}
-      </ul>
-    </nav>
+      </nav>
+    </div>
   );
 };
 
