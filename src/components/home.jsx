@@ -7,7 +7,7 @@ import HomeStock from '../assets/home-stock.jpg';
 import Sustainable from '../assets/Sustainable-Innovation-crop-3.png';
 import img from '../assets/c89e77-iStock-1364679535.jpg';
 import green from '../assets/green-energy.webp';
-import logo from '../assets/logo.jpg';
+import logo from '../assets/logo-nobg.png';
 
 
 
