@@ -24,7 +24,7 @@ function App() {
         <Route path="/services" element={<><Navbar /><Diagnose /></>} /> {/* Navbar included */}
         <Route path="/history" element={<><Navbar /><History /></>} /> {/* Navbar included */}
         <Route path="/blog" element={<><Navbar /><Blog /></>} /> {/* Navbar included */}
-        <Route path="/blog/:blogId" element={<BlogDetail />} />
+        <Route path="/blog/:blogId" element={<><Navbar /><BlogDetail /></>} />
         <Route path="/FAQ" element={<><Navbar /><FAQ /></>} /> {/* Navbar included */}
         <Route path="/forgotpassword" element={<ForgotPassword />} />
         <Route path="/resetpassword" element={<ResetPassword />} />

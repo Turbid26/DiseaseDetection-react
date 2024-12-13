@@ -38,6 +38,11 @@ const BlogDetail = () => {
   if (!blog) return <p>Loading blog...</p>;
 
   return (
+    <div>
+    <div className="blog-hero">
+        <h1 className="blog-hero-title">Community Discussions</h1>
+        <p className="blog-hero-subtitle">Share your thoughts, insights, and ideas!</p>
+      </div>
     <div className="blog-detail-container">
       <h1>{blog.title}</h1>
       <p>{blog.content}</p>
@@ -60,6 +65,7 @@ const BlogDetail = () => {
           Submit Comment
         </button>
       </div>
+    </div>
     </div>
   );
 };
