@@ -28,7 +28,7 @@ export default function Feedback() {
     e.preventDefault();
     try {
       //Handle form submission (e.g., send to API)
-      const uploadResponse = await axios.post('/api/contact/submit', formData, {
+      await axios.post('/api/contact/submit', formData, {
       headers: { 'Content-Type': 'application/json' },
        });
 
