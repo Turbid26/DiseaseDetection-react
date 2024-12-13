@@ -9,23 +9,24 @@ import img from '../assets/c89e77-iStock-1364679535.jpg';
 import green from '../assets/green-energy.webp';
 import logo from '../assets/logo-nobg.png';
 
-const Home = () => {
+const Home: React.FC = () => {
   // Function to create a leaf element and add to the DOM
   const createLeaf = () => {
     const leaf = document.createElement('div');
     leaf.className = 'leaf';
-    let a = Math.random();
+
+    const randomType = Math.random();
 
     // Assign random leaf type
-    if (a > 0.5) {
+    if (randomType > 0.5) {
       leaf.textContent = '🍃';
-    } else if (a < 0.25) {
+    } else if (randomType < 0.25) {
       leaf.textContent = '🍂';
-    } else if (a < 0.4) {
+    } else if (randomType < 0.4) {
       leaf.textContent = '🌿';
-    } else if (a < 0.6) {
+    } else if (randomType < 0.6) {
       leaf.textContent = '🍁';
-    } else if (a < 0.7) {
+    } else if (randomType < 0.7) {
       leaf.textContent = '🍀';
     }
 
@@ -143,7 +144,7 @@ const Home = () => {
             journey every step of the way.
           </p>
           <p>Join us in reshaping the future of farming. Let's grow, together.</p>
-          <img src={green}alt="Greener Tomorrow" />
+          <img src={green} alt="Greener Tomorrow" />
         </section>
       </div>
     </div>
