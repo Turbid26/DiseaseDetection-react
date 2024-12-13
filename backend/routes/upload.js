@@ -11,6 +11,11 @@ const { identifyPlant } = require('../plantnet');
 const storage = multer.memoryStorage();
 const uploadMiddleware = multer({ storage: storage });
 
+let username = '';
+let imageUrl = '';
+let diagnosis = '';
+let accuracy = 0;
+
 // Route for image upload and leaf detection
 router.post('/', uploadMiddleware.single('image'), async (req, res) => {
   try {
@@ -18,7 +23,7 @@ router.post('/', uploadMiddleware.single('image'), async (req, res) => {
       return res.status(400).json({ error: 'No file uploaded.' });
     }
 
-    const username = req.body.username?.trim();
+    username = req.body.username;
     if (!username) {
       return res.status(400).json({ error: 'Username is required.' });
     }
@@ -37,12 +42,15 @@ router.post('/', uploadMiddleware.single('image'), async (req, res) => {
       ).end(req.file.buffer);
     });
 
-    const imageUrl = result.secure_url;
+    imageUrl = result.secure_url;
 
-    const leafres = await identifyPlant(imageUrl);
-    console.log(leafres);
-    
-    
+    res.status(201).json({
+            message: 'Image uploaded successfully.',
+            upload: {
+              url: imageUrl,
+              username: username,
+            },
+          });
 
   } catch (error) {
     console.error(error);
@@ -58,12 +66,33 @@ router.post('/classify', async (req, res) => {
       return res.status(400).json({ error: 'Username and image URL are required' });
     }
 
+    const withTimeout = (promise, timeoutMs) => {
+      let timeout;
+
+      const timeoutPromise = new Promise((_, reject) =>
+        timeout = setTimeout(() => reject(new Error('Request timed out')), timeoutMs)
+      );
+      return Promise.race([promise, timeoutPromise]).finally(() => clearTimeout(timeout));
+    };
+
+    try
+    {
+      const leafres = await withTimeout(
+        await identifyPlant(imageUrl), 10000);
+        console.log(leafres);
+    }
+    catch (error)
+    {
+      console.error('Error classifying image:', error);
+      return res.status(500).json({ error: error.response?.data || 'Please upload well lit image of a leaf.' });
+    }
+
     const response = await axios.post(
       'https://api-inference.huggingface.co/models/ozair23/mobilenet_v2_1.0_224-finetuned-plantdisease',
       { inputs: imageUrl },
       {
         headers: {
-          Authorization: `Bearer ${process.env.HF_API_KEY}`, // Use API key from environment
+          Authorization: `Bearer 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`, // Use API key from environment
         },
       }
     );
@@ -71,8 +100,8 @@ router.post('/classify', async (req, res) => {
     const classificationResults = response.data;
 
     if (classificationResults && Array.isArray(classificationResults) && classificationResults.length > 0) {
-      const diagnosis = classificationResults[0].label;
-      const accuracy = classificationResults[0].score * 100;
+      diagnosis = classificationResults[0].label;
+      accuracy = classificationResults[0].score * 100;
 
       const newUpload = new Upload({
         url: imageUrl,
@@ -92,8 +121,16 @@ router.post('/classify', async (req, res) => {
       res.status(400).json({ error: 'No classification results returned' });
     }
   } catch (error) {
+    
     console.error('Error classifying image:', error);
-    res.status(500).json({ error: error.response?.data || 'Error classifying image' });
+    res.status(500).json({ error: error.response?.data || 'Please try again in about 20 seconds.' });
+  }
+  finally
+  {
+    username = '';
+    imageUrl = '';
+    diagnosis = '';
+    accuracy = 0;
   }
 });
 

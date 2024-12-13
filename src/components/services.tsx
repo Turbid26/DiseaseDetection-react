@@ -29,6 +29,10 @@ export default function Diagnose() {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    setClassificationResult(null);
+    setMessage('');
+
     if (!selectedFile) return;
 
     setIsUploading(true);
@@ -57,11 +61,19 @@ export default function Diagnose() {
       setClassificationResult({ diagnosis, accuracy });
       setMessage('Image classified successfully!');
     } catch (error) {
-      setMessage('Error processing image. Please try again.');
+      setMessage('Please upload Well-lit image of a leaf.');
       console.error('Error:', error);
     } finally {
       setIsUploading(false);
     }
+  };
+
+  const formatDiagnosis = (diagnosis: string) => {
+    // Split by '__' and capitalize the first letter of each word
+    const parts = diagnosis.split('__');
+    const mainPart = parts[0].charAt(0).toUpperCase() + parts[0].slice(1); // Capitalize the first part
+    const secondPart = parts.slice(1).join(' ').replace(/_/g, ' '); // Join the rest and replace underscores with spaces
+    return `${mainPart} : ${secondPart.charAt(0).toUpperCase() + secondPart.slice(1)}`; // Format as "Main : Second"
   };
 
   return (
@@ -119,7 +131,7 @@ export default function Diagnose() {
 
         {classificationResult && (
           <div className="mt-6 text-center">
-            <p className="text-lg font-medium">Diagnosis: {classificationResult.diagnosis}</p>
+            <p className="text-lg font-medium">Diagnosis: {formatDiagnosis(classificationResult.diagnosis)}</p>
             <p className="text-sm text-gray-500">
               Accuracy: {classificationResult.accuracy.toFixed(2)}%
             </p>
